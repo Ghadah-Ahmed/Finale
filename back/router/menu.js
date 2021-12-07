@@ -8,7 +8,7 @@ let router = express.Router();
 const Menu = mongoose.model('Menu', MenuSchema);
 const Missing = mongoose.model('Missing', MissingSchema);
 
-// Get Final Menu
+// Get Guests Menu
 router.get("/:adminID/:userID", async(req, res) => {
   Missing.find({user: req.params.userID}, (err, missing) => {
     var a = missing.map((b)=> {return b.menu})
@@ -24,11 +24,11 @@ router.get("/:adminID/:userID", async(req, res) => {
 
 
 router.get("/:adminID", async(req, res) => {
-    res.send(await Menu.find({admin: req.params.adminID}).populate("admin")); 
+    res.send(await Menu.find({admin: req.params.adminID})); 
 });
 
 router.get("/:id", async (req, res) => {
-  res.send((await Menu.findById(req.params.id)));
+  res.send ( await Menu.findById(req.params.id) );
 });
 
 router.delete("/:id", async (req, res) => {

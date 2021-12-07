@@ -7,7 +7,12 @@ module.exports =  new mongoose.Schema({
     },
     admin: {
       type: mongoose.Schema.Types.ObjectId,
-      required: [true, 'admin id should be provided'],
+      required: [true, 'Admin id should be provided'],
       ref: "Admin"
+    },
+    section: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: [true, 'Section id should be provided'],
+      ref: "Section"
     }
 });

@@ -7,7 +7,7 @@ const Menu = require('./router/menu')
 const Users = require('./router/users')
 const Missing = require('./router/missing')
 const Admin = require('./router/admin')
-
+const Section = require('./router/section')
 
 app.use(express.json())
 app.use(cors({origin: `http://localhost:${POTR}`}))
@@ -18,10 +18,13 @@ async function main() {
 }
 
 
-app.use('/menu', Menu)
-app.use('/users', Users)
-app.use('/missing', Missing)
 app.use('/admin', Admin)
+app.use('/users', Users)
+app.use('/menu', Menu)
+app.use('/section', Section)
+app.use('/missing', Missing)
+
+
 
 app.listen(POTR, function () {
      console.log(`Example app listening on port 8080! ${POTR}`)

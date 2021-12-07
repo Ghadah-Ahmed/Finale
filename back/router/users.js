@@ -11,7 +11,7 @@ router.get("/:adminID", async(req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  res.send((await User.findById(req.params.id)));
+  res.send(await User.findById(req.params.id));
 });
 
 router.delete("/:id", async (req, res) => {

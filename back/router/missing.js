@@ -7,7 +7,7 @@ let router = express.Router();
 const Missing = mongoose.model('Missing', MissingSchema);
 
 router.get("/", async (req, res) => {
-  res.send((await Missing.find({})));
+  res.send( await Missing.find({}));
 });
 
 router.delete("/:menuID", async(req, res) => {
