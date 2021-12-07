@@ -6,12 +6,12 @@ let router = express.Router();
 const User = mongoose.model('User', UserSchema);
 
 
-router.get("/", async (req, res) => {
-  res.send(await User.find({})); 
+router.get("/:adminID", async(req, res) => {
+  res.send(await User.find({admin: req.params.adminID})); 
 });
 
-router.get("/:authorId", async(req, res) => {
-  res.send(await User.find({author_id: req.params.authorId})); 
+router.get("/:id", async (req, res) => {
+  res.send((await User.findById(req.params.id)));
 });
 
 router.delete("/:id", async (req, res) => {

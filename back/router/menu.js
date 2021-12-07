@@ -1,14 +1,32 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const MenuSchema = require("../schema/MenuSchema");
+const MissingSchema = require("../schema/MissingSchema");
 
 
 let router = express.Router();
 const Menu = mongoose.model('Menu', MenuSchema);
+const Missing = mongoose.model('Missing', MissingSchema);
 
-router.get("/", async (req, res) => {
-  res.send((await Menu.find({})));
+// Get Final Menu
+router.get("/:adminID/:userID", async(req, res) => {
+  Missing.find({user: req.params.userID}, (err, missing) => {
+    var a = missing.map((b)=> {return b.menu})
+    Menu.find({admin: req.params.adminID, _id: {$nin: a}}, (err, available) => {
+      Menu.find({admin: req.params.adminID, _id: {$in: a}}, (err, notAvailable) => {
+       var here = available.map((a)=> {return {...a._doc, available: true}})
+       var notHere = notAvailable.map((a)=> {return {...a._doc, available: false}})
+        res.send(here.concat(notHere))
+      })
+    })
+  })
 });
+
+
+router.get("/:adminID", async(req, res) => {
+    res.send(await Menu.find({admin: req.params.adminID}).populate("admin")); 
+});
+
 router.get("/:id", async (req, res) => {
   res.send((await Menu.findById(req.params.id)));
 });
