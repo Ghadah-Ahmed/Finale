@@ -1,3 +1,155 @@
 .App {
   text-align: center;
 }
+.nav{
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: 58px;
+  width: 100%;
+  background-color: white;
+  z-index: 1000;
+  pointer-events: auto;
+}
+.b_menu{
+  box-sizing: border-box;
+  display: flex;
+  background-color: rgb(255, 255, 255);
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  color: rgb(87, 89, 98);
+  position: relative;
+  border-radius: 4px;
+  box-shadow: rgb(0 0 0 / 15%) 2px 2px 5px;
+  cursor: pointer;
+  margin: 12px;
+}
+.logo{
+  box-sizing: border-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  flex: 2 1 0%;
+  text-align: center;
+  background-color: transparent;
+}
+.title{
+  box-sizing: border-box;
+  color: rgb(0, 0, 0);
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 30px;
+  position: relative;
+  margin: 0;
+}
+.intro{
+  margin-top: 15px;
+  padding: 0 10px;
+}
+.description{
+  box-sizing: border-box;
+  line-height: 22px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: normal;
+  color: rgb(61, 63, 70);
+}
+
+.scrolling>[data-arrow=right]{
+  background: linear-gradient(270deg,#fff 10%,hsla(0,0%,100%,0));
+  right: 0;
+  position: absolute;
+  height: 100%;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+}
+.scrolling>[data-arrow=right]>button{
+  background: url(https://cdn.dsmcdn.com/web/production/slick-arrow.svg)  50%  no-repeat;
+  background-color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  height: 50px;
+  width: 50px;
+  outline: 0;
+  transform: scale(.5);
+}
+
+.scrolling>[data-arrow=left]{
+  background: linear-gradient(90deg,#fff 10%,hsla(0,0%,100%,0));
+  left: 0;
+  position: absolute;
+  height: 100%;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+}
+.scrolling>[data-arrow=left]>button{
+  background: url(https://cdn.dsmcdn.com/web/production/slick-arrow.svg) 50% no-repeat;
+  background-color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  height: 50px;
+  width: 50px;
+  outline: 0;
+  transform: rotate(
+  180deg) scale(.5);
+}
+
+.menu_section{
+  box-sizing: border-box;
+  max-width: 120px;
+  height: 135px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  text-decoration: none;
+  color: rgb(61, 63, 70);
+}
+
+.menu_section:first-of-type{
+  margin-left: 15px;
+}
+.menu_section:last-of-type{
+  margin-right: 15px;
+}
+.menu_section img{
+  width: 120px;
+  height: 80px;
+  border-radius: 4px;
+}
+.menu_section hr{
+  border:none;
+  box-sizing: border-box;
+  border-top: 1px solid rgb(0, 0, 0);
+  animation-duration: 0.7s;
+  animation-name: fadeInLeft;
+}
+
+.none{
+  display: none;
+}
+@keyframes fadeInLeft{
+  0% {
+    opacity: 0;
+    transform: translate3d(-100%, 0px, 0px);
+  }
+  
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0px, 0px);
+  }
+}
