@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Cart() {
-    const [items, setItems] = React.useState(['qq', 'ee', 'gg'])
+    const [items, setItems] = React.useState(['qq', 'ee'])
     const navigate = useNavigate()
 
     return (
@@ -28,13 +28,11 @@ export default function Cart() {
           ))}
           </div>
           </div>
-
-          <div className='details_div'>
-                <p className="item_price">المجموع <span>SR59.00</span></p>
-                <p className="item_price">الضريبة <span>SR59.00</span></p>
-                <p className='item_name'>المجموع الكليّ <span>SR59.00</span></p>
-
-
+<hr/>
+          <div className='order_div details_div'>
+                <p className="display item_description">المجموع <span>SR59.00</span></p>
+                <p className="display item_description">الضريبة <span>SR59.00</span></p>
+                <p style={{color: '#000'}} className='display item_name'>المجموع الكليّ <span>SR59.00</span></p>
 
                 <div className='contact_div' id='order_div'>
                     {/* <a href="tel:+966555720204"> */}

@@ -6,7 +6,6 @@ import cartSvg from '../../../images/cart.svg'
 
 function useQuery() {
     const { search } = useLocation();
-  
     return React.useMemo(() => new URLSearchParams(search), [search]);
 }
   
@@ -30,7 +29,7 @@ export default function Menu() {
                     <span>0</span>
                     <img src={cartSvg}/>
                 </div>
-                <div className='b_menu'>
+                <div className='b_menu' onClick={()=> navigate('/menu/id/id')}>
                    <svg width="16" height="16" viewBox="0 0 24 26" fill="currentColor" _css4="rotate(360deg)"><path d="M6.92 1c.255 0 .509.138.636.275l10.158 11.157c.381.413.381.964 0 1.377L7.683 24.69c-.381.413-.89.413-1.27 0-.381-.413-.381-.964 0-1.377l9.396-10.192L6.287 2.652c-.381-.413-.381-.964 0-1.378A.932.932 0 016.92 1z" fill="null" stroke="null" strokeWidth="0.25"></path></svg>
                 </div>
                 <div className="logo">
