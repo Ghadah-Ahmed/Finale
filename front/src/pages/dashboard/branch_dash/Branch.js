@@ -4,7 +4,7 @@ import Barcode from './Barcode';
 import Menu from './Menu';
 import Orders from './Orders';
 import barcode from '../../../images/barcode.svg';
-import signOut from '../../../images/signOut.svg';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import bell from '../../../images/bell.gif';
 import bellS from '../../../images/bell.svg';
 
@@ -45,7 +45,7 @@ export default function  Branch() {
                             </div>
                         </Link>
                         <div className='b_menu'>
-                            <img src={signOut} />
+                            <LogoutRoundedIcon/>
                         </div>
                     </div>
                 </div>

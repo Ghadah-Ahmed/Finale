@@ -3,6 +3,7 @@ import React from 'react'
 export default function Button({value}) {
 
     const [color, setColor] = React.useState('#ff8b00')
+    const [val, setVal] = React.useState(value)
 
     React.useEffect(() => {
         switch(value) {
@@ -13,7 +14,7 @@ export default function Button({value}) {
             setColor('green')
             break;
         case 'Closed':
-            setColor('red')
+            setColor('rgba(244, 67, 54, 0.85)')
             break;
         default:
             setColor('#ff8b00')
@@ -30,12 +31,15 @@ export default function Button({value}) {
     switch(value) {
         case 'Active':
             setColor('#ff8b00')
+            setVal(value)
           break;
         case 'Processing':
             setColor('green')
+            setVal(value)
             break;
         case 'Closed':
-            setColor('red')
+            setColor('rgba(244, 67, 54, 0.85)')
+            setVal(value)
             break;
         default:
             setColor('#ff8b00')
@@ -43,7 +47,7 @@ export default function Button({value}) {
  }
 
     return (
-            <select value={value} onChange={(e)=> changeColor(e.target.value) } style={selectStyle}>
+            <select value={val} onChange={(e)=> changeColor(e.target.value) } style={selectStyle}>
                 <option>Active</option>
                 <option>Processing</option>
                 <option>Closed</option>

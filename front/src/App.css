@@ -402,7 +402,7 @@ p, h1, h2, h3, h4, h5 {
   cursor: pointer;
   margin: 0 0 40px;
   float: left;
-  /* padding: 10px 0; */
+  /* padding: 0 10px; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -430,7 +430,43 @@ p, h1, h2, h3, h4, h5 {
   color: #ff8b00;
   font-weight: bolder;
 }
-
+.dash_menu_div{
+  width: 100%;
+  height: 20vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px 70px;
+  align-items: center;
+  padding-top: 30px;
+  overflow: scroll;
+  box-shadow: rgb(0 0 0 / 15%) 2px 2px 5px;
+}
+.dash_menu_div_item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(87, 89, 98);
+  position: relative;
+  border-radius: 5px;
+  box-shadow: rgb(0 0 0 / 15%) 2px 2px 5px;
+  cursor: pointer;
+  width: 95%;
+}
+.dash_menu_div_item img{
+  object-fit: cover;
+}
+.unavailable{
+  background-color: rgba(0, 0, 0, 0.09);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border-radius: 5px;
+}
 select {
   font: 400 12px/1.3 sans-serif;
   -webkit-appearance: none;
@@ -463,6 +499,42 @@ select:active {
   border-color: #fff;
   background-color: #fff;
 } */
+
+
+@keyframes s-ripple {
+  0% {
+      transform: scale(0);
+  }
+  20% {
+      transform: scale(1);
+  }
+  100% {
+      opacity: 0;
+      transform: scale(1);
+  }
+}
+@keyframes s-ripple-dup {
+ 0% {
+     transform: scale(0);
+  }
+ 30% {
+      transform: scale(1);
+  }
+  60% {
+      transform: scale(1);
+  }
+  100% {
+      opacity: 0;
+      transform: scale(1);
+  }
+}
+.control-checkbox input + .control_indicator::before {
+  animation: s-ripple 250ms ease-out;
+}
+.control-checkbox input:checked + .control_indicator::before {
+  animation-name: s-ripple-dup;
+}
+
 @keyframes fadeInLeft{
   0% {
     opacity: 0;
