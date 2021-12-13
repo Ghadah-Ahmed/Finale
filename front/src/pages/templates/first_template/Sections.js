@@ -18,12 +18,12 @@ export default function Sections({section}) {
 
 
     return (
-        <Link to={`?section=${section}`} className='menu_section' onClick={(e)=> clickOnSection(e)}>
+        <Link to={`?section=${section._id}`} className='menu_section' onClick={(e)=> clickOnSection(e)}>
             <div>
-                <img  src='https://finedine.imgix.net/2PvyB5mz/91eaa640-eac7-4537-9b5a-1cff08b4e355.jpg?auto=format,&fit=crop&w=120&h=80&dpr=3'/>
+                <img  src={section.image}/>
             </div>
             <div>
-                <p>بوكسات الفورنايو</p>
+                <p>{section.name}</p>
                 <hr className='none'/> 
             </div>   
         </Link>

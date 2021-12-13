@@ -1,9 +1,26 @@
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
+import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 export default function Cart() {
-    const [items, setItems] = React.useState(['qq', 'ee'])
+    const [items, setItems] = React.useState([])
+    const [ordersNum, setOrdersNum] = React.useState(true)
+
     const navigate = useNavigate()
+
+    React.useEffect(() => {
+        var all = []
+        for (var key in localStorage) {
+            if (JSON.parse(localStorage.getItem(`${key}`))  !== null  ){
+                var item = JSON.parse(localStorage.getItem(`${key}`))
+                all.push(item)
+            }
+        }
+        setItems(all)
+    },[ordersNum])
+
+
 
     return (
         <div>
@@ -13,22 +30,13 @@ export default function Cart() {
         <div >
           <h3>My Orders</h3>
           <div className='items_container'>
-          {items.map((item) => (
-              <a>
-              <div className='item_div'>
-                  <div className='item_info'>
-                      <p style={{fontSize: '16px', lineHeight: '30px'}} className='item_name'>بوكس كوكيز الفورنايو</p>
-                      <p style={{fontSize: '13px', lineHeight: '20px', marginBottom: '10px'}} className='item_description'>اللذّة والخّفة والذوبان قصة مع كوكيز الفورنايو</p>
-                      <span style={{fontSize: '14px'}} className='item_price'>SR59.00</span>
-                  </div>
-                  <img  src='https://finedine.imgix.net/2PvyB5mz/91eaa640-eac7-4537-9b5a-1cff08b4e355.jpg?auto=format,&fit=crop&w=120&h=80&dpr=3'/>
-                  <span className='remove_order'>X</span>
-              </div>
-              </a>
+          {items?.map((item, index) => (
+              <CartItem item={item} key={index} ordersNum={ordersNum} setOrdersNum={setOrdersNum}/>
           ))}
           </div>
           </div>
 <hr/>
+
           <div className='order_div details_div'>
                 <p className="display item_description">المجموع <span>SR59.00</span></p>
                 <p className="display item_description">الضريبة <span>SR59.00</span></p>
@@ -49,3 +57,45 @@ export default function Cart() {
         </div>
     )
 }
+
+
+function CartItem({ item, setOrdersNum, ordersNum }) {
+    const [quantity, setQuantity] = React.useState(item.quantity || 1)
+
+    const addItem = () => {
+        setQuantity(quantity+1)
+        var old = JSON.parse(localStorage.getItem(`${item._id}`)) 
+        localStorage.setItem(`${item._id}`, JSON.stringify({...old, quantity: quantity+1}));
+    }
+
+    const decreaseItem = () => {
+       if (quantity > 1){
+        setQuantity(quantity-1) 
+        var old = JSON.parse(localStorage.getItem(`${item._id}`)) 
+        localStorage.setItem(`${item._id}`, JSON.stringify({...old, quantity: quantity-1}));
+       }else{
+        localStorage.removeItem(`${item._id}`)
+        setOrdersNum(!ordersNum)
+       }   
+    }
+
+    return (
+        <a>
+        <div className='item_div'>
+            <div className='item_info'>
+                <p style={{fontSize: '16px', lineHeight: '30px'}} className='item_name'>{item.name}</p>
+                <p style={{fontSize: '13px', lineHeight: '20px', marginBottom: '10px'}} className='item_description'>{item.description}</p>
+                <div style={{justifyContent: 'space-between', display: 'flex', alignItems: 'center', gap: '10'}}>
+                  <span style={{fontSize: '14px'}} className='item_price'>{item.price * quantity}$</span>
+                  <div>
+                      <AddCircleOutlinedIcon onClick={() => addItem()}/>
+                      <RemoveCircleIcon onClick={() => decreaseItem()} sx={{ ml: 2}}/>
+                  </div>
+                </div>
+            </div>
+            <img  src={item.image}/>
+            <span className='remove_order'>{quantity}</span>
+        </div>
+        </a>
+    );
+  }

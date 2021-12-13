@@ -107,17 +107,9 @@
 }
 .cart span{
     position: absolute;
-    top: 0px;
-    right: 1px;
-    display: inline-block;
-    padding: 1px 4px ;
-    font-size: 10px;
-    -moz-border-radius: 7.5px;
-    -webkit-border-radius: 7.5px;
-    border-radius: 7.5px;
-    color: #fff;
+    top: 3px;
+    right: 5px;
     background-color: #575962;
-    border: 1px solid #575962;
 }
 .cart{
   box-sizing: border-box;
@@ -274,6 +266,7 @@
   width: 120px;
   height: 80px;
   border-radius: 4px;
+  object-fit: cover;
 }
 .menu_section hr{
   border:none;
@@ -483,6 +476,29 @@ select {
   background-position: right 20px center, right bottom, right bottom, right bottom;   
 }
 
+
+
+
+form{
+  background-color: rgba(0, 0, 0, 0.04);
+  height: 100%;
+}
+form input[type=submit] {
+  width: 100%;
+  background-color: #9c27b0;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+form input[type=submit]:hover {
+  background-color: #ba68c8;
+}
+
+
 /* select:hover {
   background-image: linear-gradient(#fff, #fff),
     linear-gradient(-135deg, transparent 50%, #fff 50%),
@@ -582,13 +598,17 @@ select:active {
   }
   .item_div{
     display: block;
+    width: 350px;
   }
   .item_div img{   
     width: 100%;
+    min-height: 150px;
+    object-fit: cover;
+    margin-top: 10px;
   }
   .menu_section{
     margin: 20px 0;
-    width: 100%;
+    width: 30%;
     height: 335px;
     overflow: hidden;
   }

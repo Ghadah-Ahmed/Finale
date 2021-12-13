@@ -4,10 +4,12 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import PreviewIcon from '@mui/icons-material/Preview';
 
 const rows = [
   {
@@ -91,7 +93,19 @@ export default function StickyHeadTable() {
                     <TableCell sx={{ width: '100px', padding: '0' }}><img style={{objectFit: 'cover'}} width='100px' src={row.url}/></TableCell>
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.description} Burger TO Enhance Your Bla Bla Bla</TableCell>
-                    <TableCell>Edit || Delete || View</TableCell>
+                    <TableCell>
+                    <Stack direction="row" spacing={1}>
+                      <IconButton aria-label="delete">
+                        <DeleteIcon />
+                      </IconButton>
+                      <IconButton  aria-label="add an alarm">
+                        <ModeEditIcon />
+                      </IconButton>
+                      <IconButton color="secondary" aria-label="add to shopping cart">
+                        <PreviewIcon />
+                      </IconButton>
+                  </Stack>
+                    </TableCell>
                   </TableRow>
                 );
               })}
