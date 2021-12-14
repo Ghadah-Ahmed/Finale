@@ -6,14 +6,14 @@ import Badge from '@material-ui/core/Badge';
 export default function Nav({ordersNum}) {
     const navigate = useNavigate()
     const [modal, setModal] = React.useState(false)
-    const [count, setCount] = React.useState(localStorage.length);
+    const [count, setCount] = React.useState(sessionStorage.length);
 
     React.useEffect(() => {
         modal ? document.body.classList.add("body_stop_scroll"): document.body.classList.remove("body_stop_scroll")
     }, [modal]);
 
     React.useEffect(() => {
-        setCount(localStorage.length)
+        setCount(sessionStorage.length)
     }, [ordersNum]);
 
 

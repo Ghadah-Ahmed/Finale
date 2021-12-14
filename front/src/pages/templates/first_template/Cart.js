@@ -2,22 +2,51 @@ import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import firebaseDb from "../../../fire";
 
 export default function Cart() {
     const [items, setItems] = React.useState([])
     const [ordersNum, setOrdersNum] = React.useState(true)
+    const [total, setTotal] = React.useState(0)
+    const [info, setInfo] = React.useState({name: '', note: ''})
 
     const navigate = useNavigate()
 
+    const order = () => {
+        let obj = {orders: items, note: info.note, name: info.name, status: 'Active'}
+        console.log(obj)
+        firebaseDb.child('orders').push( obj ).then(res => {
+            console.log(res.getKey())
+        }).catch(
+            err => console.log(err)
+        )
+    }
+
+    React.useEffect(() => {
+        firebaseDb.child('orders/-Mqt-t-nrU4dBQPwgEAK').on('value', snapshot => {
+            if (snapshot.val() != null)
+                console.log({
+                    ...snapshot.val()
+                })
+            else
+            console.log({})
+        })
+    }, [])
+
     React.useEffect(() => {
         var all = []
-        for (var key in localStorage) {
-            if (JSON.parse(localStorage.getItem(`${key}`))  !== null  ){
-                var item = JSON.parse(localStorage.getItem(`${key}`))
+        var total = 0;
+        for (var key in sessionStorage) {
+            if (JSON.parse(sessionStorage.getItem(`${key}`))  !== null  ){
+                var item = JSON.parse(sessionStorage.getItem(`${key}`))
                 all.push(item)
+                total += item.price*item.quantity || item.price ;
             }
         }
         setItems(all)
+        setTotal(total)
     },[ordersNum])
 
 
@@ -33,25 +62,52 @@ export default function Cart() {
           {items?.map((item, index) => (
               <CartItem item={item} key={index} ordersNum={ordersNum} setOrdersNum={setOrdersNum}/>
           ))}
+                { items.length != 0 ?
+
+                <div className='item_div' dir='ltr'>
+                    <form style={{width: '100%'}}>
+                    <TextField
+                        id="outlined-multiline-static"
+                        label="Note"
+                        multiline
+                        rows={4}
+                        fullWidth
+                        placeholder="Leave a side note."
+                        onChange={(e)=> setInfo({...info, note: e.target.value})}
+                        variant="outlined"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                     />
+                    <TextField 
+                        id="outlined-basic"
+                        label="Table / Name"
+                        placeholder="Leave your name."
+                        variant="outlined" 
+                        color='primary'
+                        fullWidth
+                        onChange={(e)=> setInfo({...info, name: e.target.value})}
+                        style={{ marginTop: '10px'}} 
+                        InputLabelProps={{
+                            shrink: true,
+                         }}
+                    />
+                    </form>
+                </div> 
+                
+                :<></>}
           </div>
           </div>
-<hr/>
+        
+        <hr/>
 
           <div className='order_div details_div'>
-                <p className="display item_description">المجموع <span>SR59.00</span></p>
+                <p className="display item_description">المجموع <span>SR{total}</span></p>
                 <p className="display item_description">الضريبة <span>SR59.00</span></p>
-                <p style={{color: '#000'}} className='display item_name'>المجموع الكليّ <span>SR59.00</span></p>
+                <p style={{color: '#000'}} className='display item_name'>المجموع الكليّ <span>SR{total}</span></p>
 
-                <div className='contact_div' id='order_div'>
-                    {/* <a href="tel:+966555720204"> */}
-                    <button>
-                        <div>
-                            <span>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.982 17.25l-4.292-2.785a2.221 2.221 0 00-3.093.667l-.568.89c-1.004-.347-2.596-1.115-4.266-2.785-1.67-1.67-2.44-3.261-2.786-4.265l.89-.568a2.21 2.21 0 00.98-1.412 2.198 2.198 0 00-.311-1.677L6.75 1.02A2.225 2.225 0 003.68.35l-1.046.667a4.485 4.485 0 00-1.157 1.08C-1.515 6.3.163 13.404 5.38 18.62 8.748 21.988 13.053 24 16.893 24c1.919 0 3.653-.512 5.014-1.48l.032-.025a4.5 4.5 0 001.054-1.141l.663-1.037a2.237 2.237 0 00-.674-3.067zm-.423 2.37l-.654 1.025a3.183 3.183 0 01-.774.833c-1.137.8-2.6 1.223-4.237 1.223-3.505 0-7.465-1.87-10.597-5C1.534 12.94-.086 6.571 2.52 2.872a3.154 3.154 0 01.824-.768l1.035-.66a.951.951 0 011.282.283l2.788 4.298a.923.923 0 01-.28 1.284l-1.309.835a.65.65 0 00-.276.72c.355 1.28 1.208 3.238 3.262 5.291 2.053 2.053 4.01 2.906 5.291 3.261a.653.653 0 00.721-.276l.835-1.308a.944.944 0 011.288-.279l4.296 2.787a.934.934 0 01.283 1.28z" fill="null"></path></svg>
-                            </span>
-                            <span>اطلب الآن</span>
-                        </div>
-                    </button>
+                <div  id='order_div' style={{padding: '0 15px'}}>
+                    <Button onClick={()=> order()} fullWidth variant="contained">اطلب الآن</Button>
                 </div>
             </div>
         </div>
@@ -62,21 +118,28 @@ export default function Cart() {
 function CartItem({ item, setOrdersNum, ordersNum }) {
     const [quantity, setQuantity] = React.useState(item.quantity || 1)
 
+    React.useEffect(() => {
+        isNaN(item.quantity) ?
+        setQuantity(1)
+        : setQuantity(item.quantity)
+    },[item])
+
     const addItem = () => {
         setQuantity(quantity+1)
-        var old = JSON.parse(localStorage.getItem(`${item._id}`)) 
-        localStorage.setItem(`${item._id}`, JSON.stringify({...old, quantity: quantity+1}));
+        var old = JSON.parse(sessionStorage.getItem(`${item._id}`)) 
+        sessionStorage.setItem(`${item._id}`, JSON.stringify({...old, quantity: quantity+1}));
+        setOrdersNum(!ordersNum)
     }
 
     const decreaseItem = () => {
        if (quantity > 1){
         setQuantity(quantity-1) 
-        var old = JSON.parse(localStorage.getItem(`${item._id}`)) 
-        localStorage.setItem(`${item._id}`, JSON.stringify({...old, quantity: quantity-1}));
+        var old = JSON.parse(sessionStorage.getItem(`${item._id}`)) 
+        sessionStorage.setItem(`${item._id}`, JSON.stringify({...old, quantity: quantity-1}));
        }else{
-        localStorage.removeItem(`${item._id}`)
-        setOrdersNum(!ordersNum)
+        sessionStorage.removeItem(`${item._id}`)
        }   
+       setOrdersNum(!ordersNum)
     }
 
     return (

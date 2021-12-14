@@ -4,22 +4,22 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 export default function AddButton({ordersNum, setOrdersNum, item }) {
     const [added, setAdded] = React.useState(false)
-    const [items, setItems] = React.useState({...localStorage})
+    const [items, setItems] = React.useState({...sessionStorage})
 
     const saveToCart = (item) => {
-          localStorage.setItem(`${item._id}`, JSON.stringify({...item}));
+          sessionStorage.setItem(`${item._id}`, JSON.stringify({...item}));
           setAdded(true)    
-          setOrdersNum? setOrdersNum(!ordersNum): setItems({...localStorage});
+          setOrdersNum? setOrdersNum(!ordersNum): setItems({...sessionStorage});
       }
 
     const removeFromCart = (item) => {
         setAdded(false)
-        localStorage.removeItem(`${item._id}`)
-        setOrdersNum? setOrdersNum(!ordersNum): setItems({...localStorage});
+        sessionStorage.removeItem(`${item._id}`)
+        setOrdersNum? setOrdersNum(!ordersNum): setItems({...sessionStorage});
     }
 
     React.useEffect(() => {
-    setItems({...localStorage})
+    setItems({...sessionStorage})
     },[ordersNum])
 
 

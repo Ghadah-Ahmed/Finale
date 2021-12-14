@@ -9,20 +9,22 @@ export default function Sections({section}) {
             const element = container[index];
             element.getElementsByTagName('hr')[0].classList.add('none')
             element.getElementsByTagName('p')[0].classList.remove('active')
-
+            element.getElementsByClassName('section_blur')[0].classList.remove('none')
         }
         e.target.parentElement.parentElement.getElementsByTagName('hr')[0].classList.remove('none')
         e.target.parentElement.parentElement.getElementsByTagName('p')[0].classList.add('active')
-
+        e.target.parentElement.parentElement.getElementsByClassName('section_blur')[0].classList.add('none')
     }
 
 
     return (
         <Link to={`?section=${section._id}`} className='menu_section' onClick={(e)=> clickOnSection(e)}>
-            <div>
-                <img  src={section.image}/>
+            <div className='section_images_div'>
+                <img  src={section.image}></img>
+                <div className='section_blur'></div>
+                <h3 style={{position: 'absolute'}} >{section.name}</h3>
             </div>
-            <div>
+            <div className='mobile_title'>
                 <p>{section.name}</p>
                 <hr className='none'/> 
             </div>   
