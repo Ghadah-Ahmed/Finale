@@ -499,6 +499,22 @@ form input[type=submit]:hover {
   background-color: #ba68c8;
 }
 
+.orders_div{
+  padding: 20px;
+  width: 90%;
+  margin-bottom: 10px;
+}
+
+.orders_header{
+  display: flex;
+  justify-content: space-around;
+  background-color: rgb(87, 89, 98);
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
+.orders_header p{
+  color: #fff;
+}
 
 /* select:hover {
   background-image: linear-gradient(#fff, #fff),
@@ -677,5 +693,8 @@ select:active {
   }
   .order_div{
     padding: 0 30%;
+  }
+  .orders_header{
+    display: none;
   }
 }

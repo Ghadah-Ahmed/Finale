@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -14,31 +13,9 @@ import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
 import ArrowDropUpRoundedIcon from '@mui/icons-material/ArrowDropUpRounded';
 import TablePagination from '@mui/material/TablePagination';
 import Button from './Button'
+import firebaseDb from "../../../fire";
 
-function createData(table, orderId, date, time, status, orders) {
-  return {
-    table,
-    orderId,
-    date,
-    time,
-    status,
-    orders: [
-      {
-        date: '2020-01-05',
-        customerId: '11091700',
-        amount: 3,
-      },
-      {
-        date: '2020-01-02',
-        customerId: 'Anonymous',
-        amount: 1,
-      },
-    ],
-  };
-}
-
-function Row(props) {
-  const { row } = props;
+function Row({ row, id }) {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -53,44 +30,56 @@ function Row(props) {
             {open ? <ArrowDropUpRoundedIcon/> : <ArrowDropDownRoundedIcon/> }
           </IconButton>
         </TableCell>
-        <TableCell align="left">{row.table}</TableCell>
-        <TableCell align="left">{row.orderId}</TableCell>
+        <TableCell align="left">{row.name}</TableCell>
+        <TableCell align="left">{id}</TableCell>
         <TableCell align="left">{row.date}</TableCell>
         <TableCell align="left">{row.time}</TableCell>
-        <TableCell align="left"><Button value='Active'/></TableCell>
+        <TableCell align="left"><Button obj={row} id={id} value={row.status}/></TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0, backgroundColor: 'rgba(0, 0, 0, 0.04)'}} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
+            <Box sx={{ margin: 1}}>
               <Typography variant="h6" gutterBottom component="div">
                 Orders
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align="right">Amount</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Quantity</TableCell>
+                    <TableCell align="right">Price</TableCell>
                     <TableCell align="right">Total price ($)</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.orders.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
+                  {row.orders.map((order, index) => (
+                    <TableRow key={index}>
                       <TableCell component="th" scope="row">
-                        {historyRow.date}
+                        {order.name}
                       </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
+                      <TableCell>{order.quantity || 1}</TableCell>
+                      <TableCell align="right">{order.price}</TableCell>
                       <TableCell align="right">
-                        {Math.round(historyRow.amount * row.status * 100) / 100}
+                        {Math.round((order.quantity || 1 )* order.price * 100) / 100}
                       </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
             </Box>
+
+            <Typography sx={{mt: 5}} variant="h6" gutterBottom component="div">
+                Side Note
+            </Typography>
+              <Table size="small" aria-label="purchases">
+              <TableBody>
+                    <TableRow >
+                      <TableCell>{row.note}</TableCell>    
+                    </TableRow>
+                </TableBody>
+              </Table>           
+                  
           </Collapse>
         </TableCell>
       </TableRow>
@@ -98,40 +87,24 @@ function Row(props) {
   );
 }
 
-Row.propTypes = {
-  row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-      }),
-    ).isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired,
-  }).isRequired,
-};
-
-const rows = [
-  createData('Frozen yoghurt', 26256547853489534783658842906794398048508,'2020-01-05', 24, 4.0, 3.99),
-  createData('Ice cream sandwich', 26256547853489534783658842906794398048508,'2020-01-05', 37, 4.3, 4.99),
-  createData('Eclair', 26256547853489534783658842906794398048508, '2020-01-05', 24, 6.0, 3.79),
-  createData('Cupcake', 26256547853489534783658842906794398048508,'2020-01-05', 67, 4.3, 2.5),
-  createData('Gingerbread', 26256547853489534783658842906794398048508, '2020-01-05', 49, 3.9, 1.5),
-  createData('Frozen yoghurt', 26256547853489534783658842906794398048508, '2020-01-05', 24, 4.0, 3.99),
-  createData('Ice cream sandwich', 26256547853489534783658842906794398048508,'2020-01-05', 37, 4.3, 4.99),
-  createData('Eclair', 26256547853489534783658842906794398048508, '2020-01-05', 24, 6.0, 3.79),
-  createData('Cupcake', 26256547853489534783658842906794398048508,'2020-01-05', 67, 4.3, 2.5),
-  createData('Gingerbread', 26256547853489534783658842906794398048508, '2020-01-05', 49, 3.9, 1.5),
-];
 
 export default function CollapsibleTable() {
+
+  const [rows, setRows] = React.useState({});
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  React.useEffect(() => {
+    firebaseDb.child('orders').on('value', snapshot => {
+        if (snapshot.val() != null)
+            // console.log(snapshot.val())
+            setRows(snapshot.val())
+        else
+        console.log({})
+
+    })
+  }, [])// similar to componentDidMount
+
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -155,11 +128,11 @@ export default function CollapsibleTable() {
           </TableRow>
         </TableHead>
         <TableBody >
-           {rows
+           {Object.keys(rows).reverse()
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .map((id, index) => {
                 return (
-                  <Row key={row.orderId} row={row} />
+                  <Row  key={index} row={rows[id]} id={id} />
                 );
               })}
         </TableBody>
@@ -167,7 +140,7 @@ export default function CollapsibleTable() {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={Object.keys(rows).length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

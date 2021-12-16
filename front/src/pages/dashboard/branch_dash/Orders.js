@@ -16,23 +16,6 @@ export default function Orders() {
                 <div className='dash_div'><Bubble/></div>
             </div>
             <div style={{maxHeight: '65vh', height: 'auto'}} className='dash_div'>
-            {/* <h2 style={{textAlign: 'left'}}>Orders</h2> */}
-            {/* <div className='branch_statistics table'>
-                        <p>Table</p>
-                        <p>Order Id</p>
-                        <p>Date</p>
-                        <p>Time</p>
-                        <p>Status</p>
-                    </div> */}
-                {/* {items.map((item)=>(
-                    <div className='branch_statistics table'>
-                        <p>{item}</p>
-                        <p>{item}</p>
-                        <p>{item}</p>
-                        <p>{item}</p>
-                        <p><Button value='Active'/></p>
-                    </div>
-                ))} */}
                 <CollapsibleTable/>
             </div>   
         </div>

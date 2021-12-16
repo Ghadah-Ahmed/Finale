@@ -4,38 +4,6 @@ import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
 
-const images = [
-  {
-    url: 'https://mui.com/static/images/buttons/breakfast.jpg',
-    title: 'Breakfast',
-    width: '40%',
-  },
-  {
-    url: 'https://mui.com/static/images/buttons/burgers.jpg',
-    title: 'Burgers',
-    width: '30%',
-  },
-  {
-    url: 'https://mui.com/static/images/buttons/camera.jpg',
-    title: 'Camera',
-    width: '30%',
-  },
-  {
-    url: 'https://mui.com/static/images/buttons/burgers.jpg',
-    title: 'Burgers',
-    width: '30%',
-  },
-  {
-    url: 'https://mui.com/static/images/buttons/camera.jpg',
-    title: 'Camera',
-    width: '30%',
-  }, 
-   {
-    url: 'https://mui.com/static/images/buttons/breakfast.jpg',
-    title: 'Breakfast',
-    width: '40%',
-  },
-];
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
   position: 'relative',
@@ -98,20 +66,21 @@ const ImageBackdrop = styled('span')(({ theme }) => ({
 //   transition: theme.transitions.create('opacity'),
 // }));
 
-export default function ButtonBases() {
+export default function ButtonBases({rows}) {
+
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%', height: '100%', overflow: 'scroll' }}>
-      {images.map((image) => (
+      {rows.map((row, index) => (
         <ImageButton
           focusRipple
-          key={image.title}
+          key={index}
           style={{
-            width: image.width,
+            width: '33.33%',
             height: '100%',
           }}
-          onClick={()=> console.log(image.title)}
+          onClick={()=> console.log(row.name)}
         >
-          <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
+          <ImageSrc style={{ backgroundImage: `url(${row.image})` }} />
           <ImageBackdrop className="MuiImageBackdrop-root" />
           <Image>
             <Typography
@@ -125,7 +94,7 @@ export default function ButtonBases() {
                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
               }}
             >
-              {image.title}
+              {row.name}
               {/* <ImageMarked className="MuiImageMarked-root" /> */}
             </Typography>
           </Image>

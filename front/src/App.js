@@ -7,6 +7,7 @@ import Details from './pages/templates/first_template/Details';
 import Cart from './pages/templates/first_template/Cart';
 import Branch from './pages/dashboard/branch_dash/Branch';
 import MainD from './pages/dashboard/main_dash/MainD';
+import Orders from './pages/templates/first_template/Orders';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/menu/:id/:id" element={<Menu/>}/> 
           <Route path="/menu/:id/:id/detail/:itemId" element={<Details/>}/> 
           <Route path="/cart" element={<Cart/>}/> 
+          <Route path="/orders" element={<Orders/>}/> 
 
         </Routes>
     </Router>

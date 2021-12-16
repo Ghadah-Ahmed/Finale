@@ -11,10 +11,10 @@ import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import PreviewIcon from '@mui/icons-material/Preview';
 import { styled } from '@mui/material/styles';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
+import axios from 'axios';
 
 
 const Input = styled('input')({
@@ -22,9 +22,39 @@ const Input = styled('input')({
 });
 
 export default function Menu() {
-    const [age, setAge] = React.useState('');
+    const [sectionID, setSectionID] = React.useState('');
+    const [rows, setRows] = React.useState([])
+
+    const [sectionImage, setSectionImage] = React.useState('https://freelance.sa/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png')
+  
+    const uploadImage = async e => {
+      const files = e.target.files
+      const data = new FormData()
+      data.append('file', files[0])
+      data.append('upload_preset', 'images')
+      const res = await fetch(
+        'https://api.cloudinary.com/v1_1/det8kbepq/image/upload',
+        {
+          method: 'POST',
+          body: data
+        }
+      )
+      const file = await res.json()
+  
+      setSectionImage(file.secure_url)
+    }
+    
+
+    React.useEffect(() => {
+      axios.get(`http://localhost:8080/section`)
+      .then(res => {
+        setRows(res.data)
+      })
+  },[])
+
+
     const handleChange = (event) => {
-        setAge(event.target.value);
+        setSectionID(event.target.value);
       };
     
     return (
@@ -33,10 +63,18 @@ export default function Menu() {
                 <div style={{width: '450px'}} className='dash_div'>
                 <form style={{display: 'flex', justifyContent: 'space-around', alignItems:'center'}}>
                     <div>
-                        <TextField id="standard-basic" label="Name"  color="secondary" variant="standard" sx={{width: '200px'}} /><br/>
-                        <TextField id="standard-basic" label="Description"  color="secondary" variant="standard" sx={{width: '200px'}} />
+                    <TextField
+                        id="outlined-basic"
+                        label="Name" variant="outlined" 
+                        size='small'
+                        color="secondary"
+                        sx={{width: '200px', mb: 1, mt:1}} 
+                        InputLabelProps={{
+                            shrink: true,
+                    }}/>                  
+                        <img style={{objectFit:'cover'}} width='200px' height='40px' src={sectionImage}/>
                         <label htmlFor="contained-button-file">
-                        <Input accept="image/*" id="contained-button-file"  multiple type="file" />
+                        <Input accept="image/*" id="contained-button-file" onChange={(e)=> uploadImage(e)}  multiple type="file" />
                         <Button variant="contained"  sx={{backgroundColor: '#bdbdbd', width: '200px', m: 1}} color="secondary" component="span">
                             Upload Image ‎&nbsp;‎ <PhotoCamera />
                         </Button>
@@ -55,7 +93,7 @@ export default function Menu() {
                   </Stack>                </form>
                 </div>
                 <div className='dash_div'>
-                    <Sections/>
+                    <Sections rows={rows}/>
                 </div>
             </div>
             <div className='branch_statistics'>
@@ -67,8 +105,10 @@ export default function Menu() {
             <form >
             <h3 style={{textAlign: 'center', margin: '0', padding: '20px', backgroundColor: 'rgba(0, 0, 0, 0.04)', borderBottom: '1px solid rgba(224, 224, 224, 1)'}}>New Dish</h3>
 
-            <TextField id="outlined-basic"
+            <TextField
+                id="outlined-basic"
                 label="Name" variant="outlined" 
+                size='small'
                 color="secondary"
                 sx={{width: '300px', marginTop: '20px'}} 
                 InputLabelProps={{
@@ -79,7 +119,7 @@ export default function Menu() {
                     id="filled-multiline-static"
                     label="Description"
                     multiline
-                    rows={4}
+                    rows={2}
                     defaultValue=""
                     color="secondary"
                     sx={{width: '300px', marginTop: '20px'}}
@@ -92,6 +132,7 @@ export default function Menu() {
                     id="outlined-number"
                     label="Price"
                     type="number"
+                    size='small'
                     sx={{ mt: 2, width: 120}}
                     color="secondary"
                     InputLabelProps={{
@@ -99,7 +140,7 @@ export default function Menu() {
                     }}
                             />
     
-                <FormControl sx={{ mt: 2, ml: 1, minWidth: 170 }}>
+                <FormControl sx={{ mt: 2, ml: 1, minWidth: 170, mb: 2 }}>
                     <InputLabel 
                         color="secondary"
                         id="demo-simple-select-autowidth-label">
@@ -108,24 +149,25 @@ export default function Menu() {
                     <Select
                     labelId="demo-simple-select-autowidth-label"
                     id="demo-simple-select-autowidth"
-                    value={age}
+                    value={sectionID}
                     onChange={handleChange}
                     color="secondary"
                     label="Section"
+                    size='small'
                     >
-                        <MenuItem value=""><em>None</em></MenuItem>
-                        <MenuItem value={10}>Dinner</MenuItem>
-                        <MenuItem value={21}>Coffee</MenuItem>
-                        <MenuItem value={22}>Breakfast</MenuItem>
+                        {rows.map((row)=>(
+                           <MenuItem value={row._id}>{row.name}</MenuItem>
+                        ))}
                     </Select>
                 </FormControl>
                 </div>
+                
 
-
+                <img style={{objectFit:'cover'}} width='300px' height='90px' src='https://freelance.sa/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'/>
 
                 <label htmlFor="contained-button-file">
                 <Input accept="image/*" id="contained-button-file"  multiple type="file" />
-                <Button variant="contained"  sx={{backgroundColor: '#bdbdbd', width: '300px', marginTop: '20px'}} color="secondary" component="span">
+                <Button variant="contained"  sx={{backgroundColor: '#bdbdbd', width: '300px', marginTop: '10px'}} color="secondary" component="span">
                     Upload Image ‎&nbsp;‎ <PhotoCamera />
                 </Button>
                 </label>

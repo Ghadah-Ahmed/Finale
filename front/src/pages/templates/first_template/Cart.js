@@ -16,24 +16,20 @@ export default function Cart() {
 
     const order = () => {
         let obj = {orders: items, note: info.note, name: info.name, status: 'Active'}
-        console.log(obj)
         firebaseDb.child('orders').push( obj ).then(res => {
-            console.log(res.getKey())
+            var orders = JSON.parse(localStorage.getItem("orders")) || [];
+            orders.push(res.getKey()); 
+            localStorage.setItem(`orders`, JSON.stringify(orders));
+            var n = sessionStorage.length;
+                while(n--) {
+                var key = sessionStorage.key(n);
+                    sessionStorage.removeItem(key);
+            }
+            navigate('/orders')
         }).catch(
             err => console.log(err)
         )
     }
-
-    React.useEffect(() => {
-        firebaseDb.child('orders/-Mqt-t-nrU4dBQPwgEAK').on('value', snapshot => {
-            if (snapshot.val() != null)
-                console.log({
-                    ...snapshot.val()
-                })
-            else
-            console.log({})
-        })
-    }, [])
 
     React.useEffect(() => {
         var all = []
