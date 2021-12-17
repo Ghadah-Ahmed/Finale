@@ -40,7 +40,7 @@ router.delete("/:id", async (req, res) => {
   res.send( await Menu.findByIdAndDelete(req.params.id))
 });
 
-router.patch("/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   res.send( await  Menu.findByIdAndUpdate(req.params.id,{...req.body})) 
 });
 

@@ -12,7 +12,7 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import PreviewIcon from '@mui/icons-material/Preview';
 import axios from 'axios';
 
-export default function StickyHeadTable() {
+export default function StickyHeadTable({ setCurrentMenuID, deleteMenu, refresh}) {
   const [rows, setRows] = React.useState([])
 
   React.useEffect(() => {
@@ -20,7 +20,7 @@ export default function StickyHeadTable() {
     .then(res => {
       setRows(res.data)
     })
-},[])
+},[refresh])
 
   return (
     <Paper sx={{ width: '100%', overflow: 'scroll', height:"100%"}}>
@@ -35,10 +35,10 @@ export default function StickyHeadTable() {
                     <TableCell>{row.description}</TableCell>
                     <TableCell>
                     <Stack direction="row" spacing={1}>
-                      <IconButton aria-label="delete">
-                        <DeleteIcon />
+                      <IconButton  onClick={()=> deleteMenu(row._id)} aria-label="delete">
+                        <DeleteIcon/>
                       </IconButton>
-                      <IconButton  aria-label="add an alarm">
+                      <IconButton onClick={()=> setCurrentMenuID(row._id)}  aria-label="add an alarm">
                         <ModeEditIcon />
                       </IconButton>
                       <IconButton color="secondary" aria-label="add to shopping cart">

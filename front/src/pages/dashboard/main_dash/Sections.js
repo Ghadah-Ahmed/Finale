@@ -66,7 +66,7 @@ const ImageBackdrop = styled('span')(({ theme }) => ({
 //   transition: theme.transitions.create('opacity'),
 // }));
 
-export default function ButtonBases({rows}) {
+export default function ButtonBases({rows, setCurrentSectionID}) {
 
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%', height: '100%', overflow: 'scroll' }}>
@@ -78,7 +78,7 @@ export default function ButtonBases({rows}) {
             width: '33.33%',
             height: '100%',
           }}
-          onClick={()=> console.log(row.name)}
+          onClick={()=> setCurrentSectionID(row._id)}
         >
           <ImageSrc style={{ backgroundImage: `url(${row.image})` }} />
           <ImageBackdrop className="MuiImageBackdrop-root" />
