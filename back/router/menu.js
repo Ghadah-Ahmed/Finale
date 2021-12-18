@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require('mongoose');
 const MenuSchema = require("../schema/MenuSchema");
 const MissingSchema = require("../schema/MissingSchema");
+const auth = require("../middleware/auth");
 
 
 let router = express.Router();
@@ -36,15 +37,15 @@ router.get("/section/:sctionId", async (req, res) => {
 });
 
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   res.send( await Menu.findByIdAndDelete(req.params.id))
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   res.send( await  Menu.findByIdAndUpdate(req.params.id,{...req.body})) 
 });
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
     res.send( await Menu.create(req.body)) 
 });
 

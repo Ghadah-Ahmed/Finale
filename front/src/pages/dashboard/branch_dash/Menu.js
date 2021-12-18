@@ -11,7 +11,7 @@ export default function Menu() {
     const [items, setItems] = React.useState([])
 
     React.useEffect(() => {
-        axios.get(`http://localhost:8080/menu/guest/61af09d0de68afd3b8044910/61af0ab8a46570f29896158b`)
+        axios.get(`http://localhost:8080/menu/guest/61af09d0de68afd3b8044910/61bd79c004f2347cd6a01438`)
         .then(res => {
             setItems(res.data)
         })

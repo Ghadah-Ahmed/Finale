@@ -12,10 +12,16 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import PreviewIcon from '@mui/icons-material/Preview';
 import axios from 'axios';
 
-export default function StickyHeadTable({ setCurrentMenuID, deleteMenu, refresh}) {
+export default function StickyHeadTable({ setCurrentMenuID, deleteMenu, refresh, component}) {
   const [rows, setRows] = React.useState([])
 
   React.useEffect(() => {
+    component === 'Branches' ?
+    axios.get(`http://localhost:8080/users/admin/61af09d0de68afd3b8044910`)
+    .then(res => {
+      setRows(res.data)
+    })
+    : 
     axios.get(`http://localhost:8080/menu/admin/61af09d0de68afd3b8044910`)
     .then(res => {
       setRows(res.data)
@@ -30,6 +36,31 @@ export default function StickyHeadTable({ setCurrentMenuID, deleteMenu, refresh}
             {rows?.map((row, index) => {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                    {component === 'Branches' ?
+                    <>
+                    <TableCell>{row.city}</TableCell>
+                    <TableCell>{row.district}</TableCell>
+                    <TableCell>{row.name}</TableCell>
+                    <TableCell>{row.email}</TableCell>
+
+                    <TableCell>
+                    <Stack direction="row" spacing={1}>
+                      <IconButton  onClick={()=> deleteMenu(row._id)} aria-label="delete">
+                        <DeleteIcon/>
+                      </IconButton>
+                      <IconButton onClick={()=> setCurrentMenuID(row._id)}  aria-label="add an alarm">
+                        <ModeEditIcon />
+                      </IconButton>
+                      <IconButton color="secondary" aria-label="add to shopping cart">
+                        <PreviewIcon />
+                      </IconButton>
+                  </Stack>
+                    </TableCell>
+                    </> 
+                    
+                    
+                    : <> 
+                    
                     <TableCell sx={{ width: '100px', padding: '0' }}><img style={{objectFit: 'cover'}} width='100px' src={row.image}/></TableCell>
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.description}</TableCell>
@@ -46,6 +77,8 @@ export default function StickyHeadTable({ setCurrentMenuID, deleteMenu, refresh}
                       </IconButton>
                   </Stack>
                     </TableCell>
+                    </>}
+              
                   </TableRow>
                 );
               })}

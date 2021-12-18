@@ -103,6 +103,7 @@ export default function Menu() {
             .then(function (response) {
               setRefresh(!refresh)
               setSectionValues(initialValues)
+              setCurrentSectionID('')
             })
             .catch(function (error) {
               console.log(error);
@@ -125,6 +126,7 @@ export default function Menu() {
             .then(function (response) {
               setRefresh(!refresh)
               setMenuValues(initialMenuValues)
+              setCurrentMenuID('')
             })
             .catch(function (error) {
               console.log(error);
@@ -147,6 +149,7 @@ export default function Menu() {
         .then(function (response) {
           setRefresh(!refresh)
           setSectionValues(initialValues)
+          setCurrentSectionID('')
         })
         .catch(function (error) {
           console.log(error);
@@ -234,7 +237,8 @@ export default function Menu() {
             </div>
             <div style={{ height: '65vh', width: '550px'}} className='dash_div'>
             <form >
-            <h3 style={{textAlign: 'center', margin: '0', padding: '20px', backgroundColor: 'rgba(0, 0, 0, 0.04)', borderBottom: '1px solid rgba(224, 224, 224, 1)'}}>New Dish</h3>
+            <h3 style={{textAlign: 'center', margin: '0', padding: '20px', backgroundColor: 'rgba(0, 0, 0, 0.04)', borderBottom: '1px solid rgba(224, 224, 224, 1)'}}>
+                {currentMenuID? <span>Edit Dish</span>: <span>New Dish</span>}</h3>
 
             <TextField
                 id="outlined-basic"

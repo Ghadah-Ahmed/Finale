@@ -8,6 +8,8 @@ const Users = require('./router/users')
 const Missing = require('./router/missing')
 const Admin = require('./router/admin')
 const Section = require('./router/section')
+const Login = require('./router/login')
+const auth = require("./middleware/auth");
 
 app.use(express.json())
 app.use(cors({origin: `http://localhost:${POTR}`}))
@@ -24,11 +26,12 @@ async function main() {
 }
 
 
-app.use('/admin', Admin)
-app.use('/users', Users)
+app.use('/admin', auth, Admin)
+app.use('/users', auth, Users)
 app.use('/menu', Menu)
 app.use('/section', Section)
-app.use('/missing', Missing)
+app.use('/missing', auth, Missing)
+app.use('/log', Login)
 
 
 

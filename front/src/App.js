@@ -15,7 +15,7 @@ function App() {
     <Router>
         <Routes> 
           {/* ////////////////signing_forms///////////////*/}
-          <Route path="/" element={<Log_in/>}/>
+          <Route path="/login" element={<Log_in/>}/>
           <Route path="/signup" element={<Sign_up/>}/> 
 
           {/* ////////////////dashboards///////////////*/}
@@ -27,6 +27,7 @@ function App() {
           <Route path="/menu/:id/:id/detail/:itemId" element={<Details/>}/> 
           <Route path="/cart" element={<Cart/>}/> 
           <Route path="/orders" element={<Orders/>}/> 
+          <Route path="*" component={() => '404 NOT FOUND'}/> 
 
         </Routes>
     </Router>

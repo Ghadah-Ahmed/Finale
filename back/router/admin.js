@@ -22,8 +22,8 @@ router.patch("/:id", async (req, res) => {
   res.send( await  Admin.findByIdAndUpdate(req.params.id,{...req.body})) 
 });
 
-router.post("/", async (req, res) => {
-    res.send( await Admin.create(req.body))
-});
+// router.post("/", async (req, res) => {
+//     res.send( await Admin.create(req.body))
+// });
 
 module.exports = router;
