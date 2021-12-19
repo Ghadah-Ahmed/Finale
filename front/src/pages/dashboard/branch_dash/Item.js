@@ -1,18 +1,22 @@
 import React from 'react'
 import Radio from '@mui/material/Radio';
-import axios from 'axios';
+import { AuthAxiosContext } from '../../../App'
+import { useParams } from "react-router-dom";
 
 export default function Item({available, id}) {
     const [checked, setChecked] = React.useState(available)
+    const authAxios = React.useContext(AuthAxiosContext);
+    let { adminId, branchId } = useParams();
+
 
     const markUnavailable = () => {
         setChecked(!checked)
         if ( checked ){
-            axios.post('http://localhost:8080/missing/', {menu: id, user: '61bd79c004f2347cd6a01438'}).then(
+            authAxios.post('/missing/', {menu: id, user: branchId}).then(
                 console.log('posted')
               )
         }else{
-            axios.delete('http://localhost:8080/missing/' + id).then(
+            authAxios.delete('/missing/' + id).then(
                 console.log('deleted')
               )
         }

@@ -76,7 +76,7 @@ function Child({ section }) {
                 return <Statistics/>
                 break;
             case 'barcode':
-                return <Barcode/>
+                return <Barcode source='MainD'/>
                 break;
             default:
                 return <h1>Welcom to dashboard!</h1>

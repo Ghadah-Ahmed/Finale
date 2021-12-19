@@ -1,10 +1,11 @@
 import React from 'react'
 import firebaseDb from "../../../fire";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function Orders() {
     const navigate = useNavigate()
     const [orders, setOrders] = React.useState([])
+    let { adminId, branchId } = useParams();
 
 
     const selectStyle =   {
@@ -50,7 +51,7 @@ export default function Orders() {
             {orders.length != 0 ?  
             <div>
                 <div>
-                <div className='b_menu' onClick={()=> navigate('/menu/id/id')}>
+                <div className='b_menu' onClick={()=> navigate(`/menu/${adminId}/${branchId}`)}>
                     <svg width="16" height="16" viewBox="0 0 24 26" fill="currentColor" _css4="rotate(360deg)"><path d="M6.92 1c.255 0 .509.138.636.275l10.158 11.157c.381.413.381.964 0 1.377L7.683 24.69c-.381.413-.89.413-1.27 0-.381-.413-.381-.964 0-1.377l9.396-10.192L6.287 2.652c-.381-.413-.381-.964 0-1.378A.932.932 0 016.92 1z" fill="null" stroke="null" strokeWidth="0.25"></path></svg>
                 </div>
             </div>

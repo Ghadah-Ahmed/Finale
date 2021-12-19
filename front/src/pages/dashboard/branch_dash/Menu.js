@@ -5,21 +5,25 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
-import axios from 'axios';
+import { AuthAxiosContext } from '../../../App'
+import { useParams } from "react-router-dom";
 
 export default function Menu() {
     const [items, setItems] = React.useState([])
+    const authAxios = React.useContext(AuthAxiosContext);
+    let { adminId, branchId } = useParams();
+
 
     React.useEffect(() => {
-        axios.get(`http://localhost:8080/menu/guest/61af09d0de68afd3b8044910/61bd79c004f2347cd6a01438`)
+        authAxios.get(`/menu/guest/${adminId}/${branchId}`)
         .then(res => {
             setItems(res.data)
         })
     },[])
 
-    React.useEffect(() => {
-        console.log(items)
-    },[items])
+    // React.useEffect(() => {
+    //     console.log(items)
+    // },[items])
 
     return (
         <div className='orders_container'>

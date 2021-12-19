@@ -1,12 +1,10 @@
 import React from 'react'
 import Bubble from './Bubble'
-import Button from './Button'
 import CollapsibleTable from './CollapsibleTable'
 import Gradient from './Gradient'
 import Line from './Line'
 
 export default function Orders() {
-    const [items, setItems] = React.useState(['hh', 'ee', 'gg', 'hh', 'ff', 'kk', 'oo', 'yy', 'ff', 'kk', 'oo', 'yy'])
    
     return (
         <div className='orders_container'>

@@ -1,4 +1,5 @@
 import './App.css';
+import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Log_in from './pages/signing_forms/Log_in';
 import Sign_up from './pages/signing_forms/Sign_up';
@@ -8,9 +9,24 @@ import Cart from './pages/templates/first_template/Cart';
 import Branch from './pages/dashboard/branch_dash/Branch';
 import MainD from './pages/dashboard/main_dash/MainD';
 import Orders from './pages/templates/first_template/Orders';
+import axios from 'axios';
+
+
+const authAxios = axios.create({
+  baseURL: 'http://localhost:8080',
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('token')}`
+  }
+})
+
+export const AuthAxiosContext = React.createContext(authAxios);
+
 
 function App() {
+
+
   return (
+    <AuthAxiosContext.Provider value={authAxios}>
     <div className="App">
     <Router>
         <Routes> 
@@ -19,19 +35,20 @@ function App() {
           <Route path="/signup" element={<Sign_up/>}/> 
 
           {/* ////////////////dashboards///////////////*/}
-          <Route path="/dash/:id/:id" element={<Branch/>}/> 
+          <Route path="/dash/:adminId/:branchId" element={<Branch/>}/> 
           <Route path="/dash/:id/" element={<MainD/>}/> 
 
           {/* ////////////////first_template ///////////////*/}
-          <Route path="/menu/:id/:id" element={<Menu/>}/> 
-          <Route path="/menu/:id/:id/detail/:itemId" element={<Details/>}/> 
-          <Route path="/cart" element={<Cart/>}/> 
-          <Route path="/orders" element={<Orders/>}/> 
+          <Route path="/menu/:adminId/:branchId" element={<Menu/>}/> 
+          <Route path="/menu/:adminId/:branchId/detail/:itemId" element={<Details/>}/> 
+          <Route path="/cart/:adminId/:branchId" element={<Cart/>}/> 
+          <Route path="/orders/:adminId/:branchId" element={<Orders/>}/> 
           <Route path="*" component={() => '404 NOT FOUND'}/> 
 
         </Routes>
     </Router>
     </div>
+    </AuthAxiosContext.Provider>
   );
 }
 

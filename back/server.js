@@ -27,7 +27,7 @@ async function main() {
 
 
 app.use('/admin', auth, Admin)
-app.use('/users', auth, Users)
+app.use('/users', Users)
 app.use('/menu', Menu)
 app.use('/section', Section)
 app.use('/missing', auth, Missing)

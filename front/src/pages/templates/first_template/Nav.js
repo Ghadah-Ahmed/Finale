@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import cartSvg from '../../../images/cart.svg'
 import Badge from '@material-ui/core/Badge';
 
@@ -7,6 +7,8 @@ export default function Nav({ordersNum}) {
     const navigate = useNavigate()
     const [modal, setModal] = React.useState(false)
     const [count, setCount] = React.useState(sessionStorage.length);
+    let { adminId, branchId } = useParams();
+
 
     React.useEffect(() => {
         modal ? document.body.classList.add("body_stop_scroll"): document.body.classList.remove("body_stop_scroll")
@@ -21,11 +23,11 @@ export default function Nav({ordersNum}) {
         <div>
             
             <div className="nav">
-                <div className='cart' onClick={()=> navigate('/cart')}>
+                <div className='cart' onClick={()=> navigate(`/cart/${adminId}/${branchId}`)}>
                     <Badge color="secondary" badgeContent={count} ></Badge>
                     <img src={cartSvg}/>
                 </div>
-                <div className='b_menu' onClick={()=> navigate('/menu/id/id')}>
+                <div className='b_menu' onClick={()=> navigate(`/menu/${adminId}/${branchId}`)}>
                    <svg width="16" height="16" viewBox="0 0 24 26" fill="currentColor" _css4="rotate(360deg)"><path d="M6.92 1c.255 0 .509.138.636.275l10.158 11.157c.381.413.381.964 0 1.377L7.683 24.69c-.381.413-.89.413-1.27 0-.381-.413-.381-.964 0-1.377l9.396-10.192L6.287 2.652c-.381-.413-.381-.964 0-1.378A.932.932 0 016.92 1z" fill="null" stroke="null" strokeWidth="0.25"></path></svg>
                 </div>
                 <div className="logo">

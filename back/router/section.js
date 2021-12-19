@@ -7,8 +7,8 @@ const auth = require("../middleware/auth");
 let router = express.Router();
 const Section = mongoose.model('Section', SectionSchema);
 
-router.get("/", async (req, res) => {
-  res.send( await Section.find({}));
+router.get("/admin/:adminID", async (req, res) => {
+  res.send( await Section.find({admin: req.params.adminID}));
 });
 
 router.get("/:id", async (req, res) => {

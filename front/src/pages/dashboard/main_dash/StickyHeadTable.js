@@ -11,18 +11,20 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import PreviewIcon from '@mui/icons-material/Preview';
 import axios from 'axios';
+import { useParams } from 'react-router-dom'
 
 export default function StickyHeadTable({ setCurrentMenuID, deleteMenu, refresh, component}) {
   const [rows, setRows] = React.useState([])
+  let { id } = useParams();
 
   React.useEffect(() => {
     component === 'Branches' ?
-    axios.get(`http://localhost:8080/users/admin/61af09d0de68afd3b8044910`)
+    axios.get(`http://localhost:8080/users/admin/${id}`)
     .then(res => {
       setRows(res.data)
     })
     : 
-    axios.get(`http://localhost:8080/menu/admin/61af09d0de68afd3b8044910`)
+    axios.get(`http://localhost:8080/menu/admin/${id}`)
     .then(res => {
       setRows(res.data)
     })

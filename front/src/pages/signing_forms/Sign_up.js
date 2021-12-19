@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
+import { Link } from 'react-router-dom'
 
 export default function Sign_up() {
 
@@ -52,7 +53,7 @@ export default function Sign_up() {
                <div className='form_div'>
                <TextField size='small' sx={{width: '290px', mt: '20px'}} color='secondary' id="standard-basic" label="Name" variant="standard" />
                <TextField size='small' sx={{width: '290px', mt: '20px'}} type='email' color='secondary' id="standard-basic" label="Email" variant="standard"/>
-               <FormControl sx={{width: '290px', mt: '20px'}} color='secondary' variant="standard">
+               <FormControl sx={{width: '290px', mt: '20px', mb: 4}} color='secondary' variant="standard">
           <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
           <Input
             id="standard-adornment-password"
@@ -73,7 +74,9 @@ export default function Sign_up() {
           />
         </FormControl>  
 
-        <Button size='large' sx={{width: '200px', mt: '40px'}} color='secondary' variant="text">Get Started</Button>
+        <br/>
+        <Link to='/login' style={{marginTop: '50px'}}>Login</Link><br/>
+        <Button size='large' sx={{width: '200px', mt: 1}} color='secondary' variant="text">Get Started</Button>
       
             
            </div>

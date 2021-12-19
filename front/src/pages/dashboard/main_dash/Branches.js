@@ -3,7 +3,8 @@ import StickyHeadTable from './StickyHeadTable'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-
+import { useParams } from 'react-router-dom'
+import { AuthAxiosContext } from '../../../App'
 
 const initialValues = {name: '', city: '', district: '', email: '', password: ''}
 
@@ -13,6 +14,10 @@ export default function Branches() {
 
     const [currentID, setCurrentID] = React.useState('')
     const [Values, setValues] = React.useState(initialValues)
+
+
+    let { id } = useParams();
+    const authAxios = React.useContext(AuthAxiosContext);
 
     React.useEffect(() => {
         if( currentID !== '')  
@@ -24,7 +29,7 @@ export default function Branches() {
 
     const postOrEdit = () => {
         if (currentID === ''){
-            axios.post('http://localhost:8080/users', {...Values, admin: '61af09d0de68afd3b8044910'})
+            authAxios.post('/log/signbranch', {...Values, admin: id})
               .then(function (response) {
                 setRefresh(!refresh)
                 setValues(initialValues)
@@ -33,7 +38,7 @@ export default function Branches() {
                 console.log(error);
               });
         }else{
-            axios.put('http://localhost:8080/users/'+currentID, Values)
+            authAxios.put('/users/'+currentID, Values)
             .then(function (response) {
               setRefresh(!refresh)
               setValues(initialValues)
@@ -51,7 +56,7 @@ export default function Branches() {
     };
 
     const deleteBranch = (id) => {
-        axios.delete('http://localhost:8080/users/'+id)
+        authAxios.delete('/users/'+id)
         .then(function (response) {
           setRefresh(!refresh)
           setValues(initialValues)

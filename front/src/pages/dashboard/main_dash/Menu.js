@@ -16,6 +16,8 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import ClearIcon from '@mui/icons-material/Clear';
 import axios from 'axios';
+import { useParams } from 'react-router-dom'
+import { AuthAxiosContext } from '../../../App'
 
 
 const Input = styled('input')({
@@ -35,18 +37,22 @@ export default function Menu() {
     const [currentMenuID, setCurrentMenuID] = React.useState('')
     const [menuValues, setMenuValues] = React.useState(initialMenuValues)
 
+    let { id } = useParams();
+    const authAxios = React.useContext(AuthAxiosContext);
+
 
     React.useEffect(() => {
-        axios.get(`http://localhost:8080/section`)
+        axios.get(`http://localhost:8080/section/admin/${id}`)
         .then(res => {
           setRows(res.data)
         })
       },[refresh])
 
     React.useEffect(() => {
+        if( currentSectionID !== '' ) 
     axios.get(`http://localhost:8080/section/`+currentSectionID)
     .then(res => {
-        if( !res.data.length ) setSectionValues({name: res.data.name, image: res.data.image})  
+    setSectionValues({name: res.data.name, image: res.data.image})  
     })
     },[currentSectionID])
 
@@ -90,7 +96,7 @@ export default function Menu() {
 
     const postOrEditSection = () => {
         if (currentSectionID === ''){
-            axios.post('http://localhost:8080/section', {...sectionValues, admin: '61af09d0de68afd3b8044910'})
+            authAxios.post('/section', {...sectionValues, admin: id})
               .then(function (response) {
                 setRefresh(!refresh)
                 setSectionValues(initialValues)
@@ -99,7 +105,7 @@ export default function Menu() {
                 console.log(error);
               });
         }else{
-            axios.put('http://localhost:8080/section/'+currentSectionID, sectionValues)
+            authAxios.put('/section/'+currentSectionID, sectionValues)
             .then(function (response) {
               setRefresh(!refresh)
               setSectionValues(initialValues)
@@ -113,7 +119,7 @@ export default function Menu() {
 
     const postOrEditMenu = () => {
         if (currentMenuID === ''){
-            axios.post('http://localhost:8080/menu', {...menuValues, admin: '61af09d0de68afd3b8044910'})
+            authAxios.post('/menu', {...menuValues, admin: id})
               .then(function (response) {
                 setRefresh(!refresh)
                 setMenuValues(initialMenuValues)
@@ -122,7 +128,7 @@ export default function Menu() {
                 console.log(error);
               });
         }else{
-            axios.put('http://localhost:8080/menu/'+currentMenuID, menuValues)
+            authAxios.put('/menu/'+currentMenuID, menuValues)
             .then(function (response) {
               setRefresh(!refresh)
               setMenuValues(initialMenuValues)
@@ -145,7 +151,7 @@ export default function Menu() {
     };
 
     const deleteSection = () => {
-        axios.delete('http://localhost:8080/section/'+currentSectionID)
+        authAxios.delete('/section/'+currentSectionID)
         .then(function (response) {
           setRefresh(!refresh)
           setSectionValues(initialValues)
@@ -157,7 +163,7 @@ export default function Menu() {
     };
 
     const deleteMenu = (id) => {
-        axios.delete('http://localhost:8080/menu/'+id)
+        authAxios.delete('/menu/'+id)
         .then(function (response) {
           setRefresh(!refresh)
           setMenuValues(initialMenuValues)

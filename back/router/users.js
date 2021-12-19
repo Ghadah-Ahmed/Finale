@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const UserSchema = require("../schema/UserSchema");
+const auth = require("../middleware/auth");
 
 let router = express.Router();
 const User = mongoose.model('User', UserSchema);
@@ -14,11 +15,11 @@ router.get("/:id", async (req, res) => {
   res.send(await User.findById(req.params.id));
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   res.send( await User.findByIdAndDelete(req.params.id))
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   res.send(await User.findByIdAndUpdate(req.params.id,{...req.body}))
 });
 

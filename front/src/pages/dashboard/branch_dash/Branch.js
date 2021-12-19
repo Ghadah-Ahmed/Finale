@@ -66,7 +66,7 @@ function Child({ section }) {
                 return <Menu/>
                 break;
             case 'barcode':
-                return <Barcode/>
+                return <Barcode source='Branch'/>
                 break;
             default:
                 return <h1>Welcom to dashboard!</h1>

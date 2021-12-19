@@ -1,7 +1,7 @@
 import React from 'react'
 import { ScrollingCarousel } from '@trendyol-js/react-carousel';
 import Sections from './Sections';
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useLocation, Link, useParams } from "react-router-dom";
 import Nav from './Nav';
 import axios from 'axios';
 import AddButton from './AddButton';
@@ -15,9 +15,11 @@ export default function Menu() {
     let query = useQuery();
     const [sections, setSections] = React.useState([])
     const [ordersNum, setOrdersNum] = React.useState(true)
+    let { adminId } = useParams();
+
 
     React.useEffect(() => {
-        axios.get(`http://localhost:8080/section`)
+        axios.get(`http://localhost:8080/section/admin/${adminId}`)
         .then(res => {
             setSections(res.data)
         })
@@ -50,11 +52,15 @@ export default function Menu() {
 
 function Child({ section, ordersNum, setOrdersNum }) {
     const [items, setItems] = React.useState([])
+    let { adminId, branchId } = useParams();
 
     React.useEffect(() => {
-      axios.get(`http://localhost:8080/menu/section/${section}`)
+      axios.get(`http://localhost:8080/menu/guest/${adminId}/${branchId}`)
       .then(res => {
-        setItems(res.data)
+        var newArray = res.data.filter(function (el) {
+            return el.section === section // Changed this so a home would match
+          });
+        setItems(newArray)
       })
   },[section])
 
@@ -65,7 +71,7 @@ function Child({ section, ordersNum, setOrdersNum }) {
           {items?.map((item, index) => (
               <div key={index} className='item_div'>
                   <div className='item_info'>
-                    <Link to={'/menu/id/id/detail/' + item._id}>
+                    <Link to={`/menu/${adminId}/${branchId}/detail/` + item._id}>
                       <p style={{fontSize: '16px', lineHeight: '30px'}} className='item_name'>{item.name}</p>
                     </Link>
 
@@ -75,7 +81,7 @@ function Child({ section, ordersNum, setOrdersNum }) {
                         <AddButton item={item} setOrdersNum={setOrdersNum} ordersNum={ordersNum}/>
                       </div>
                   </div>
-                  <Link to={'/menu/id/id/detail/' + item._id}>
+                  <Link to={`/menu/${adminId}/${branchId}/detail/` + item._id}>
                   <img src={item.image}/>
                   </Link>
               </div>
