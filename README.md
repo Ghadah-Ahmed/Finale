@@ -109,4 +109,13 @@ in ***digital menu*** , restaurant owners can create their own digital menus on 
 - Button.js		
 - Line.js
 
-  
+
+## Technologies
+
+- Cloudinary to upload photos.
+- Firebase for orders quick update.
+- JWT and Bcrypt. 
+- Front libraries: React, Material UI,  Apexcharts, Qrcode.
+- Node.
+- Express.
+- Mongoose.
