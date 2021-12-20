@@ -1,6 +1,8 @@
 ## Quick Compo
 
-<img src="/Users/enriquecoscarelli/Downloads/minilogo.png" alt="minilogo" style="zoom:75%;" />
+ <img width="390" alt="Screen Shot 1443-05-16 at 2 55 34 PM" src="https://user-images.githubusercontent.com/75578380/146763843-1c94ffe8-3922-4e77-933d-28a256e4a7d8.png">
+
+
 
 ## Description
 
@@ -97,23 +99,14 @@ in ***digital menu*** , restaurant owners can create their own digital menus on 
 **Branch Dashboard:**
 
 - Barcode.js
-
 - CollapsibleTable.js	
-
 - Menu.js
-
 - Branch.js		
-
 - Gradient.js		
-
 - Orders.js
-
 - Bubble.js		
-
 - Item.js
-
 - Button.js		
-
 - Line.js
 
   
