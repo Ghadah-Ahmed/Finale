@@ -2,11 +2,14 @@ import React from 'react'
 import { useNavigate, useParams } from "react-router-dom";
 import cartSvg from '../../../images/cart.svg'
 import Badge from '@material-ui/core/Badge';
+import texts from './Texts.json'
+import { LanguageContext } from '../../../App'
 
 export default function Nav({ordersNum}) {
     const navigate = useNavigate()
     const [modal, setModal] = React.useState(false)
     const [count, setCount] = React.useState(sessionStorage.length);
+    const {lang, setLang} = React.useContext(LanguageContext)
     let { adminId, branchId } = useParams();
 
 
@@ -17,6 +20,11 @@ export default function Nav({ordersNum}) {
     React.useEffect(() => {
         setCount(sessionStorage.length)
     }, [ordersNum]);
+
+    const changeLanguage = (language) => {
+        setLang(language)
+        setModal(false)
+    }
 
 
     return (
@@ -44,8 +52,8 @@ export default function Nav({ordersNum}) {
                 </div>
 
                 <div className='languages_div'>
-                    <p>اللغة <span>(AR)</span></p>
-                    <p>اللغة <span>(EN)</span></p>
+                    <p onClick={() => changeLanguage('ar')}>{texts[lang].language} <span>(AR)</span></p>
+                    <p onClick={() => changeLanguage('en')}>{texts[lang].language} <span>(EN)</span></p>
 
                     <hr/>
                 </div>
@@ -58,7 +66,7 @@ export default function Nav({ordersNum}) {
                             <span>
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.982 17.25l-4.292-2.785a2.221 2.221 0 00-3.093.667l-.568.89c-1.004-.347-2.596-1.115-4.266-2.785-1.67-1.67-2.44-3.261-2.786-4.265l.89-.568a2.21 2.21 0 00.98-1.412 2.198 2.198 0 00-.311-1.677L6.75 1.02A2.225 2.225 0 003.68.35l-1.046.667a4.485 4.485 0 00-1.157 1.08C-1.515 6.3.163 13.404 5.38 18.62 8.748 21.988 13.053 24 16.893 24c1.919 0 3.653-.512 5.014-1.48l.032-.025a4.5 4.5 0 001.054-1.141l.663-1.037a2.237 2.237 0 00-.674-3.067zm-.423 2.37l-.654 1.025a3.183 3.183 0 01-.774.833c-1.137.8-2.6 1.223-4.237 1.223-3.505 0-7.465-1.87-10.597-5C1.534 12.94-.086 6.571 2.52 2.872a3.154 3.154 0 01.824-.768l1.035-.66a.951.951 0 011.282.283l2.788 4.298a.923.923 0 01-.28 1.284l-1.309.835a.65.65 0 00-.276.72c.355 1.28 1.208 3.238 3.262 5.291 2.053 2.053 4.01 2.906 5.291 3.261a.653.653 0 00.721-.276l.835-1.308a.944.944 0 011.288-.279l4.296 2.787a.934.934 0 01.283 1.28z" fill="null"></path></svg>
                             </span>
-                            <span>اتصل بالمطعم</span>
+                            <span>{texts[lang].call}</span>
                         </div>
                     </button>
                     </a>

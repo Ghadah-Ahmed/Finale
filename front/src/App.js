@@ -18,15 +18,15 @@ const authAxios = axios.create({
     Authorization: `Bearer ${localStorage.getItem('token')}`
   }
 })
-
 export const AuthAxiosContext = React.createContext(authAxios);
-
+export const LanguageContext = React.createContext()
 
 function App() {
-
+  const [lang, setLang] = React.useState('ar');
 
   return (
     <AuthAxiosContext.Provider value={authAxios}>
+       <LanguageContext.Provider value={{lang, setLang}}>
     <div className="App">
     <Router>
         <Routes> 
@@ -48,6 +48,7 @@ function App() {
         </Routes>
     </Router>
     </div>
+      </LanguageContext.Provider>
     </AuthAxiosContext.Provider>
   );
 }

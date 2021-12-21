@@ -5,6 +5,8 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import firebaseDb from "../../../fire";
+import texts from './Texts.json'
+import { LanguageContext } from '../../../App'
 
 export default function Cart() {
     const [items, setItems] = React.useState([])
@@ -12,6 +14,7 @@ export default function Cart() {
     const [total, setTotal] = React.useState(0)
     const [info, setInfo] = React.useState({name: '', note: ''})
     const { adminId, branchId } = useParams();
+    const {lang, setLang} = React.useContext(LanguageContext)
 
     const navigate = useNavigate()
 
@@ -53,23 +56,23 @@ export default function Cart() {
                 <div className='b_menu' onClick={()=> navigate(`/menu/${adminId}/${branchId}`)}>
                    <svg width="16" height="16" viewBox="0 0 24 26" fill="currentColor" _css4="rotate(360deg)"><path d="M6.92 1c.255 0 .509.138.636.275l10.158 11.157c.381.413.381.964 0 1.377L7.683 24.69c-.381.413-.89.413-1.27 0-.381-.413-.381-.964 0-1.377l9.396-10.192L6.287 2.652c-.381-.413-.381-.964 0-1.378A.932.932 0 016.92 1z" fill="null" stroke="null" strokeWidth="0.25"></path></svg>
                 </div>
-        <div >
-          <h3>My Orders</h3>
+        <div>
+          <h3>{texts[lang].myOrders}</h3>
           <div className='items_container'>
           {items?.map((item, index) => (
               <CartItem item={item} key={index} ordersNum={ordersNum} setOrdersNum={setOrdersNum}/>
           ))}
                 { items.length != 0 ?
 
-                <div className='item_div' dir='ltr'>
+                <div className='item_div' dir={lang === 'ar' ? 'rtl' : "ltr"} >
                     <form style={{width: '100%'}}>
                     <TextField
                         id="outlined-multiline-static"
-                        label="Note"
+                        label={texts[lang].note}
                         multiline
                         rows={4}
                         fullWidth
-                        placeholder="Leave a side note."
+                        placeholder={texts[lang].notePlaceholder}
                         onChange={(e)=> setInfo({...info, note: e.target.value})}
                         variant="outlined"
                         InputLabelProps={{
@@ -78,8 +81,8 @@ export default function Cart() {
                      />
                     <TextField 
                         id="outlined-basic"
-                        label="Table / Name"
-                        placeholder="Leave your name."
+                        label={texts[lang].table}
+                        placeholder={texts[lang].tablePlaceholder}
                         variant="outlined" 
                         color='primary'
                         fullWidth
@@ -98,13 +101,13 @@ export default function Cart() {
         
         <hr/>
 
-          <div className='order_div details_div'>
-                <p className="display item_description">المجموع <span>SR{total}</span></p>
-                <p className="display item_description">الضريبة <span>SR59.00</span></p>
-                <p style={{color: '#000'}} className='display item_name'>المجموع الكليّ <span>SR{total}</span></p>
+          <div dir={lang === 'ar' ? 'rtl' : "ltr"} className='order_div details_div'>
+                <p className="display item_description">{texts[lang].total} <span>SR{total}</span></p>
+                <p className="display item_description">{texts[lang].VAT} <span>SR59.00</span></p>
+                <p style={{color: '#000'}} className='display item_name'>{texts[lang].gross} <span>SR{total}</span></p>
 
                 <div  id='order_div' style={{padding: '0 15px'}}>
-                    <Button onClick={()=> order()} fullWidth variant="contained">اطلب الآن</Button>
+                    <Button onClick={()=> order()} fullWidth variant="contained">{texts[lang].orderNow}</Button>
                 </div>
             </div>
         </div>
@@ -114,6 +117,7 @@ export default function Cart() {
 
 function CartItem({ item, setOrdersNum, ordersNum }) {
     const [quantity, setQuantity] = React.useState(item.quantity || 1)
+    const {lang, setLang} = React.useContext(LanguageContext)
 
     React.useEffect(() => {
         isNaN(item.quantity) ?
@@ -142,9 +146,9 @@ function CartItem({ item, setOrdersNum, ordersNum }) {
     return (
         <a>
         <div className='item_div'>
-            <div className='item_info'>
-                <p style={{fontSize: '16px', lineHeight: '30px'}} className='item_name'>{item.name}</p>
-                <p style={{fontSize: '13px', lineHeight: '20px', marginBottom: '10px'}} className='item_description'>{item.description}</p>
+            <div dir={lang === 'ar' ? 'rtl' : "ltr"} style={lang === 'ar' ? {textAlign: 'right'} : {textAlign: 'left'}} className='item_info'>
+                <p style={{fontSize: '16px', lineHeight: '30px'}} className='item_name'>{item.name[lang]}</p>
+                <p style={{fontSize: '13px', lineHeight: '20px', marginBottom: '10px'}} className='item_description'>{item.description[lang]}</p>
                 <div style={{justifyContent: 'space-between', display: 'flex', alignItems: 'center', gap: '10'}}>
                   <span style={{fontSize: '14px'}} className='item_price'>{item.price * quantity}$</span>
                   <div>

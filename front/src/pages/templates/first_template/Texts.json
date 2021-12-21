@@ -1,0 +1,29 @@
+{
+    "ar": {
+      "call": "اتصل بالمطعم",
+      "language": "اللغة",
+      "orderNow": "اطلب الآن",
+      "myOrders": "طلباتي",
+      "total": "المجموع",
+      "gross": "المجموع الكلي",
+      "VAT": "الضريبة",
+      "note": "ملاحظة",
+      "notePlaceholder": "اكتب ملاحظتك هنا.",
+      "table": "رقم الطاولة / الاسم",
+      "tablePlaceholder": "اكتب رقم الطاولة أو اسمك."
+    },
+    "en": {
+      "call": "Talk to Us",
+      "language": "Language",
+      "orderNow": "Order Now",
+      "myOrders": "My Orders",
+      "total": "Total",
+      "gross": "Gross",
+      "VAT": "VAT",
+      "note": "Note",
+      "notePlaceholder": "Leave a side note.",
+      "table": "Table / Name",
+      "tablePlaceholder": "Leave your name."
+    }
+  }
+  

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 module.exports =  new mongoose.Schema({
     name: {
-      type: String,
+      type: Object,
       required: [true, 'Section name should be provided']
     },
     image:{

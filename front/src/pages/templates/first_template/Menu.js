@@ -5,6 +5,7 @@ import { useLocation, Link, useParams } from "react-router-dom";
 import Nav from './Nav';
 import axios from 'axios';
 import AddButton from './AddButton';
+import { LanguageContext } from '../../../App'
 
 function useQuery() {
     const { search } = useLocation();
@@ -17,6 +18,7 @@ export default function Menu() {
     const [ordersNum, setOrdersNum] = React.useState(true)
     const [title, setTitle] = React.useState('')
     let { adminId } = useParams();
+    const {lang, setLang} = React.useContext(LanguageContext)
 
 
     React.useEffect(() => {
@@ -29,11 +31,11 @@ export default function Menu() {
     return (
         <div>
             { /* ////////////////////////// NAV_SECTION ////////////////////////// */ }
-            <Nav ordersNum={ordersNum}/>
+            <Nav lang={lang} ordersNum={ordersNum}/>
             { /* ////////////////////////// SECTIONS_SLIDER ////////////////////////// */ }
 
             <div className="intro">
-                <p className='title'>الـفـورنـايـو </p>
+                <p className='title'>الـفـريـايـدو </p>
                 <p className='description'>نقدم قهوتنا الخاصة، مخبوزات طازجة تشمل انواع مختلفة من الكيك، المعجنات والحلويات الأخرى.</p>
             </div>
 
@@ -54,6 +56,7 @@ export default function Menu() {
 function Child({ section, ordersNum, setOrdersNum, title }) {
     const [items, setItems] = React.useState([])
     let { adminId, branchId } = useParams();
+    const {lang, setLang} = React.useContext(LanguageContext)
 
     React.useEffect(() => {
       axios.get(`http://localhost:8080/menu/guest/${adminId}/${branchId}`)
@@ -72,15 +75,16 @@ function Child({ section, ordersNum, setOrdersNum, title }) {
           <div className='items_container'>
           {items?.map((item, index) => (
               <div key={index} className='item_div'>
+                 <div className={ !item.available? 'section_blur': 'none'}></div>
                   <Link to={`/menu/${adminId}/${branchId}/detail/` + item._id}>
                   <img src={item.image}/>
                   </Link>
-                  <div className='item_info'>
+                  <div  dir={lang === 'ar' ? 'rtl' : "ltr"} style={lang === 'ar' ? {textAlign: 'right'} : {textAlign: 'left'}}  className='item_info'>
                     <Link to={`/menu/${adminId}/${branchId}/detail/` + item._id}>
-                      <p style={{fontSize: '16px', lineHeight: '30px'}} className='item_name'>{item.name}</p>
+                      <p style={{fontSize: '16px', lineHeight: '30px'}} className='item_name'>{item.name[lang]}</p>
                     </Link>
 
-                      <p style={{fontSize: '13px', lineHeight: '20px', marginBottom: '10px'}} className='item_description'>{item.description}</p>
+                      <p style={{fontSize: '13px', lineHeight: '20px', marginBottom: '10px'}} className='item_description'>{item.description[lang]}</p>
                       <div style={{justifyContent: 'space-between', display: 'flex', alignItems: 'center', gap: '10'}}>
                         <span style={{fontSize: '14px'}} className='item_price'>{item.price}$</span>
                         <AddButton item={item} setOrdersNum={setOrdersNum} ordersNum={ordersNum}/>

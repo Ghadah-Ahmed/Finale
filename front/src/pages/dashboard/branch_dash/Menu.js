@@ -37,10 +37,10 @@ export default function Menu() {
                     <TableRow key={index} style={{position: 'relative'}}>
                     <TableCell>
                         <div style={{display: 'flex', alignItems: 'center', gap: '20px'}}>
-                        <img width='100px' height='70px' style={{objectFit: 'cover'}} src={item.image}/> {item.name}
+                        <img width='100px' height='70px' style={{objectFit: 'cover'}} src={item.image}/> {item.name.en}
                         </div>
                     </TableCell>
-                    <TableCell align="left">{item.description}</TableCell>
+                    <TableCell align="left">{item.description.en}</TableCell>
                     <TableCell align="left"><Item available={item.available} id={item._id}/></TableCell>
                     </TableRow>
                 ))}

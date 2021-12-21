@@ -94,7 +94,7 @@ export default function ButtonBases({rows, setCurrentSectionID}) {
                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
               }}
             >
-              {row.name}
+              {row.name.en}
               {/* <ImageMarked className="MuiImageMarked-root" /> */}
             </Typography>
           </Image>

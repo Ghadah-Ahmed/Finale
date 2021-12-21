@@ -64,8 +64,8 @@ export default function StickyHeadTable({ setCurrentMenuID, deleteMenu, refresh,
                     : <> 
                     
                     <TableCell sx={{ width: '100px', padding: '0' }}><img style={{objectFit: 'cover'}} width='100px' src={row.image}/></TableCell>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.description}</TableCell>
+                    <TableCell>{row.name.en}</TableCell>
+                    <TableCell>{row.description.en}</TableCell>
                     <TableCell>
                     <Stack direction="row" spacing={1}>
                       <IconButton  onClick={()=> deleteMenu(row._id)} aria-label="delete">
