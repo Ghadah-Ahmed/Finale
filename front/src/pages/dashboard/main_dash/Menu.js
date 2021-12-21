@@ -37,12 +37,12 @@ export default function Menu() {
     const [currentMenuID, setCurrentMenuID] = React.useState('')
     const [menuValues, setMenuValues] = React.useState(initialMenuValues)
 
-    let { id } = useParams();
+    let { adminId } = useParams();
     const authAxios = React.useContext(AuthAxiosContext);
 
 
     React.useEffect(() => {
-        axios.get(`http://localhost:8080/section/admin/${id}`)
+        axios.get(`http://localhost:8080/section/admin/${adminId}`)
         .then(res => {
           setRows(res.data)
         })
@@ -96,7 +96,7 @@ export default function Menu() {
 
     const postOrEditSection = () => {
         if (currentSectionID === ''){
-            authAxios.post('/section', {...sectionValues, admin: id})
+            authAxios.post('/section', {...sectionValues, admin: adminId})
               .then(function (response) {
                 setRefresh(!refresh)
                 setSectionValues(initialValues)
@@ -119,7 +119,7 @@ export default function Menu() {
 
     const postOrEditMenu = () => {
         if (currentMenuID === ''){
-            authAxios.post('/menu', {...menuValues, admin: id})
+            authAxios.post('/menu', {...menuValues, admin: adminId})
               .then(function (response) {
                 setRefresh(!refresh)
                 setMenuValues(initialMenuValues)

@@ -2,7 +2,7 @@ import React from 'react'
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
-export default function AddButton({ordersNum, setOrdersNum, item }) {
+export default function AddButton({ordersNum, setOrdersNum, item, style }) {
     const [added, setAdded] = React.useState(false)
     const [items, setItems] = React.useState({...sessionStorage})
 
@@ -25,8 +25,8 @@ export default function AddButton({ordersNum, setOrdersNum, item }) {
 
     return (
         items[item._id] || added? 
-        <RemoveCircleIcon color='warning' sx={{ ml: 2}} onClick={()=> removeFromCart(item)}/>
-    :   <AddCircleOutlinedIcon sx={{ ml: 2}} onClick={()=> saveToCart(item)}/>
+        <RemoveCircleIcon  style={style} color='warning' onClick={()=> removeFromCart(item)}/>
+    :   <AddCircleOutlinedIcon style={style} onClick={()=> saveToCart(item)}/>
 
         )
 }

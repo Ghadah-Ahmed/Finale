@@ -36,7 +36,7 @@ function App() {
 
           {/* ////////////////dashboards///////////////*/}
           <Route path="/dash/:adminId/:branchId" element={<Branch/>}/> 
-          <Route path="/dash/:id/" element={<MainD/>}/> 
+          <Route path="/dash/:adminId/" element={<MainD/>}/> 
 
           {/* ////////////////first_template ///////////////*/}
           <Route path="/menu/:adminId/:branchId" element={<Menu/>}/> 

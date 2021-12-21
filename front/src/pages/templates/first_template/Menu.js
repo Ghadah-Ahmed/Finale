@@ -15,6 +15,7 @@ export default function Menu() {
     let query = useQuery();
     const [sections, setSections] = React.useState([])
     const [ordersNum, setOrdersNum] = React.useState(true)
+    const [title, setTitle] = React.useState('')
     let { adminId } = useParams();
 
 
@@ -39,18 +40,18 @@ export default function Menu() {
             <div dir="ltr">
             <ScrollingCarousel className='scrolling'>
                 {sections.map((section, index)=>(
-                    <Sections key={index} section={section}/>
+                    <Sections setTitle={setTitle} key={index} section={section}/>
                 ))}
             </ScrollingCarousel>
             </div>
 
-            <Child section={query.get("section")} setOrdersNum={setOrdersNum} ordersNum={ordersNum}/>
+            <Child section={query.get("section")} title={title} setOrdersNum={setOrdersNum} ordersNum={ordersNum}/>
 
         </div>
     )
 }
 
-function Child({ section, ordersNum, setOrdersNum }) {
+function Child({ section, ordersNum, setOrdersNum, title }) {
     const [items, setItems] = React.useState([])
     let { adminId, branchId } = useParams();
 
@@ -67,9 +68,13 @@ function Child({ section, ordersNum, setOrdersNum }) {
 
     return (
       <div>
+        <h3 className='menu_title' >{title}</h3>
           <div className='items_container'>
           {items?.map((item, index) => (
               <div key={index} className='item_div'>
+                  <Link to={`/menu/${adminId}/${branchId}/detail/` + item._id}>
+                  <img src={item.image}/>
+                  </Link>
                   <div className='item_info'>
                     <Link to={`/menu/${adminId}/${branchId}/detail/` + item._id}>
                       <p style={{fontSize: '16px', lineHeight: '30px'}} className='item_name'>{item.name}</p>
@@ -81,9 +86,6 @@ function Child({ section, ordersNum, setOrdersNum }) {
                         <AddButton item={item} setOrdersNum={setOrdersNum} ordersNum={ordersNum}/>
                       </div>
                   </div>
-                  <Link to={`/menu/${adminId}/${branchId}/detail/` + item._id}>
-                  <img src={item.image}/>
-                  </Link>
               </div>
           ))}
           </div>

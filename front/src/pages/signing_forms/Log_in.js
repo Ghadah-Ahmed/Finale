@@ -25,12 +25,19 @@ export default function Log_in() {
         setValues({ ...values, [prop]: event.target.value });
       };
 
+      // const successfullyLoggedIn = (token, callback) => {
+      //   localStorage.setItem('token', token);
+      //   callback();
+      // }
+
       const login = () => {
         axios.post('http://localhost:8080/log/login', values).then( res => {
             setErr(false)
-            console.log(res.data)
+            console.log(res.data) 
             localStorage.setItem('token', res.data.token)
-            navigate(`/dash/${res.data.id}`)
+            res.data.role == 'branch' ?
+            navigate(`/dash/${res.data.dbUser.admin}/${res.data.dbUser._id}`)
+          : navigate(`/dash/${res.data.dbUser._id}`)
         }
         ).catch(
             function (error) {

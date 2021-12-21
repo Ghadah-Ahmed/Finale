@@ -244,7 +244,7 @@
   180deg) scale(.5);
 }
 .active{
-  color: black;
+  color: black !important;
   font-weight: bold;
 }
 .section_images_div h3{
@@ -325,6 +325,10 @@ a {
   flex: 1 1 100%;
   margin-right: 10px;
   text-align: right;
+  order: -1;
+}
+.menu_title{
+  display: none;
 }
 .item_info p{
   margin: 0;
@@ -673,18 +677,19 @@ select:active {
   }
   .item_div{
     display: block;
-    width: 350px;
+    width: 435px;
   }
   .item_div img{   
     width: 100%;
     min-height: 150px;
     object-fit: cover;
     margin-top: 10px;
+    height: 250px;
   }
   .menu_section{
     margin: 20px 0;
-    width: 30%;
-    height: 335px;
+    width: 25%;
+    height: 180px;
     overflow: hidden;
   }
   .menu_section img{   
@@ -703,25 +708,41 @@ select:active {
     border-radius: 4px;
     transition: opacity 500ms;
   }
+  .menu_section hr{
+    border-top: 5px solid rgb(0, 0, 0);
+    position: relative;
+    top: -165px;
+    width: 95%;
+  }
   .section_blur:hover{
     opacity: 0;
   }
-  .mobile_title{
+  /* .mobile_title{
     display: none;
-  }
+  } */
   .section_images_div{
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .section_images_div h3{
+  /* .section_images_div h3{
     color: rgb(255, 255, 255);
     font-size: 40px;
     font-weight: normal;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     border-bottom: 1px solid rgb(255, 255, 255);
+    top: 140px;
     display: block;
+    width: 95%;
+    background-color: rgba(82, 74, 74, 0.205);
+    margin: 0;
+    padding: 10px 0;
+  } */
+  .mobile_title p{
+    position: relative;
+    top: -160px;
+    color: #fff;
   }
   .App, .slide_nav{
     padding: 40px 20px 0;
@@ -758,5 +779,8 @@ select:active {
   .log_in_div{
     color: rgba(0, 0, 0, 0.87);
     width: 350px;
+}
+.menu_title{
+  display: block;
 }
 }

@@ -27,8 +27,8 @@ export default function Details() {
                 <p className='item_name'>{item.name}</p>
                 <p className="item_price">{item.price}$</p>
                 <p className='item_description'>{item.description}</p>
+                <AddButton style={{marginTop: '30px', alignSelf: 'center' }} item={item}/>
             </div>
-            <AddButton item={item}/>
         </div>
     )
 }

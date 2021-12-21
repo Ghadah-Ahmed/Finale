@@ -15,16 +15,16 @@ import { useParams } from 'react-router-dom'
 
 export default function StickyHeadTable({ setCurrentMenuID, deleteMenu, refresh, component}) {
   const [rows, setRows] = React.useState([])
-  let { id } = useParams();
+  let { adminId } = useParams();
 
   React.useEffect(() => {
     component === 'Branches' ?
-    axios.get(`http://localhost:8080/users/admin/${id}`)
+    axios.get(`http://localhost:8080/users/admin/${adminId}`)
     .then(res => {
       setRows(res.data)
     })
     : 
-    axios.get(`http://localhost:8080/menu/admin/${id}`)
+    axios.get(`http://localhost:8080/menu/admin/${adminId}`)
     .then(res => {
       setRows(res.data)
     })

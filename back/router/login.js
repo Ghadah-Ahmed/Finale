@@ -18,21 +18,21 @@ router.post('/login', (req, res) => {
                 if (!dbUser) {
                     return res.status(404).json({message: "user not found"});
                 } else {
-                    passwordHash(dbUser)
+                    passwordHash(dbUser, 'branch')
                 };
               }); 
         } else {
-            passwordHash(dbUser)
+            passwordHash(dbUser, 'admin')
         };
       }); 
 
-      function passwordHash(dbUser) {
+      function passwordHash(dbUser, role) {
         bcrypt.compare(req.body.password, dbUser.password, (err, compareRes) => {
             if (err) { // error while comparing
                 res.status(502).json({message: "error while checking user password"});
             } else if (compareRes) { // password match
                 const token = jwt.sign({ email: req.body.email }, 'secret', { expiresIn: '1h' });
-                res.status(200).json({message: "user logged in", "token": token, "id": dbUser._id, "name": dbUser.name});
+                res.status(200).json({message: "user logged in", "token": token, "dbUser": dbUser, "role": role});
             } else { // password doesnt match
                 res.status(401).json({message: "invalid credentials"});
             };

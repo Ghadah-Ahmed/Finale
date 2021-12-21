@@ -14,6 +14,11 @@ function useQuery() {
 }
 export default function  Branch() {
     let query = useQuery();
+    const [notification, setNotification] = React.useState(false);
+
+    React.useEffect(() => {
+        console.log(notification)
+    }, [notification]);
 
     React.useEffect(() => {
         document.body.classList.add("body_stop_scroll");
@@ -28,8 +33,8 @@ export default function  Branch() {
                         </div>
                         <Link to={`?section=orders`}>
                         <div className='b_menu'>
-                             <img src={bellS}/>
-                             {/* <img width='20' src={bell}/> */}
+                            { !notification? <img src={bellS}/>
+                             : <img width='20' src={bell}/>}
                         </div>
                         </Link>
                         <Link to={`?section=menu`}>
@@ -49,18 +54,18 @@ export default function  Branch() {
                         </div>
                     </div>
                 </div>
-                <Child section={query.get("section")} />
+                <Child setNotification={setNotification} section={query.get("section")} />
         </div>
     )
 }
 
-function Child({ section }) {
+function Child({ section, setNotification }) {
 
     const switchSection = () => {
 
         switch(section) {
             case 'orders':
-              return <Orders/>
+              return <Orders setNotification={setNotification}/>
               break;
             case 'menu':
                 return <Menu/>

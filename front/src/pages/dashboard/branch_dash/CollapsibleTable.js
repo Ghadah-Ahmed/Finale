@@ -14,6 +14,7 @@ import ArrowDropUpRoundedIcon from '@mui/icons-material/ArrowDropUpRounded';
 import TablePagination from '@mui/material/TablePagination';
 import Button from './Button'
 import firebaseDb from "../../../fire";
+import { useParams } from "react-router-dom";
 
 function Row({ row, id }) {
   const [open, setOpen] = React.useState(false);
@@ -88,18 +89,23 @@ function Row({ row, id }) {
 }
 
 
-export default function CollapsibleTable() {
+export default function CollapsibleTable({setNotification}) {
 
   const [rows, setRows] = React.useState({});
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const { adminId, branchId } = useParams();
 
   React.useEffect(() => {
-    firebaseDb.child('orders').on('value', snapshot => {
-        if (snapshot.val() != null)
-            // console.log(snapshot.val())
+    firebaseDb.child(`orders${branchId}`).on('value', snapshot => {
+        if (snapshot.val() != null){
+            console.log(snapshot.val())
+            setNotification(true)
+            setTimeout(function(){
+              setNotification(false)
+            },2000);
             setRows(snapshot.val())
-        else
+      } else
         console.log({})
 
     })

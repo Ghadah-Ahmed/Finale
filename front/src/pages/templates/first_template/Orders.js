@@ -20,7 +20,7 @@ export default function Orders() {
     
     ordersID.map((order)=>{
 
-        firebaseDb.child('orders/'+order).on('value', snapshot => {
+        firebaseDb.child(`orders${branchId}/`+order).on('value', snapshot => {
                 if (snapshot.val() != null)
                 all = {...all, [order]:{...snapshot.val()}}
                 setOrders(all)

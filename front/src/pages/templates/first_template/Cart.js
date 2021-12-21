@@ -11,13 +11,13 @@ export default function Cart() {
     const [ordersNum, setOrdersNum] = React.useState(true)
     const [total, setTotal] = React.useState(0)
     const [info, setInfo] = React.useState({name: '', note: ''})
-    let { adminId, branchId } = useParams();
+    const { adminId, branchId } = useParams();
 
     const navigate = useNavigate()
 
     const order = () => {
         let obj = {orders: items, note: info.note, name: info.name, status: 'Active'}
-        firebaseDb.child('orders').push( obj ).then(res => {
+        firebaseDb.child(`orders${branchId}`).push( obj ).then(res => {
             var orders = JSON.parse(localStorage.getItem("orders")) || [];
             orders.push(res.getKey()); 
             localStorage.setItem(`orders`, JSON.stringify(orders));
@@ -26,7 +26,7 @@ export default function Cart() {
                 var key = sessionStorage.key(n);
                     sessionStorage.removeItem(key);
             }
-            navigate('/orders')
+            navigate(`/orders/${adminId}/${branchId}`)
         }).catch(
             err => console.log(err)
         )

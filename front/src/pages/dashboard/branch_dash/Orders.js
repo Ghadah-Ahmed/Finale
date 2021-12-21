@@ -4,7 +4,7 @@ import CollapsibleTable from './CollapsibleTable'
 import Gradient from './Gradient'
 import Line from './Line'
 
-export default function Orders() {
+export default function Orders({setNotification}) {
    
     return (
         <div className='orders_container'>
@@ -14,7 +14,7 @@ export default function Orders() {
                 <div className='dash_div'><Bubble/></div>
             </div>
             <div style={{maxHeight: '65vh', height: 'auto'}} className='dash_div'>
-                <CollapsibleTable/>
+                <CollapsibleTable setNotification={setNotification}/>
             </div>   
         </div>
     )

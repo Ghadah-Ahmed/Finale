@@ -1,10 +1,12 @@
 import React from 'react'
 import firebaseDb from "../../../fire";
+import { useParams } from "react-router-dom";
 
 export default function Button({value, id, obj}) {
 
     const [color, setColor] = React.useState('#ff8b00')
     const [val, setVal] = React.useState(value)
+    const { adminId, branchId } = useParams();
 
     React.useEffect(() => {
         switch(value) {
@@ -29,7 +31,7 @@ export default function Button({value, id, obj}) {
     }
 
     const update = (value) => {
-        firebaseDb.child(`orders/${id}`).set(
+        firebaseDb.child(`orders${branchId}/${id}`).set(
             {...obj, status: value},
             err => {
                 if (err)

@@ -17,7 +17,7 @@ export default function Barcode({ source }) {
         QRcode.toDataURL(`http://localhost:3000/menu/${adminId}/${branchId}`, opts).then((data) => {
             setSrc(data)
         })
-      
+             
       : QRcode.toDataURL(`http://localhost:3000/menu/${adminId}`, opts).then((data) => {
         setSrc(data)
     })
@@ -30,7 +30,7 @@ export default function Barcode({ source }) {
             <p>Scan the URL to display your branch's menu.</p>
             <p>or visit: 
                 &nbsp;
-            <a style={{textDecoration: 'underline', color: 'blue'}} href={ source === 'Branch' ? `http://localhost:3000/menu/${adminId}/${branchId}` : `http://localhost:3000/menu/${adminId}`}>My Menu</a></p>
+            <a style={{textDecoration: 'underline', color: 'blue'}} href={ source === 'Branch' ? `http://localhost:3000/menu/${adminId}/${branchId}` : `http://localhost:3000/menu/${adminId}`}>{ source === 'Branch' ? <span>My Menu</span>:<span>My Branches</span>}</a></p>
         </div>
     )
 }
