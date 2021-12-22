@@ -41,6 +41,14 @@ in ***digital menu*** , restaurant owners can create their own digital menus on 
 - **See the status of my order** As a user/customer I can see wether my order was received or not.
 - **Access branch's contact information** As a user/customer I can call my resturant.
 
+## Features
+
+- Support languages, I18n.
+- Adding multiple branches. 
+- Selecting a theme.
+- Adding endless dishes and sections.
+- Immediate updates for orders status.
+
 ## Backlog
 
 - Support  portfolios as well.
