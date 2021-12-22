@@ -24,8 +24,8 @@ const Input = styled('input')({
   display: 'none',
 });
 
-const initialValues = {image: 'https://freelance.sa/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png', name: ''}
-const initialMenuValues = {image: 'https://freelance.sa/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png', name: '', section: '', description: '', price: ''}
+const initialValues = {image: 'https://freelance.sa/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png', name: {ar: '', en: ''}}
+const initialMenuValues = {image: 'https://freelance.sa/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png', name: {ar: '', en: ''}, section: '', description: {ar: '', en: ''}, price: ''}
 
 export default function Menu() {
     const [rows, setRows] = React.useState([])
@@ -185,7 +185,7 @@ export default function Menu() {
         <div className='orders_container'>
             <div className='branch_statistics'>
                 <div style={{width: '450px'}} className='dash_div'>
-                <form style={{display: 'flex', justifyContent: 'space-around', alignItems:'center'}}>
+                <form style={{display: 'flex', justifyContent: 'space-around', alignItems:'center', height: 'auto'}}>
                     <div>
                     <TextField
                         id="outlined-basic"
@@ -193,8 +193,21 @@ export default function Menu() {
                         variant="outlined" 
                         size='small'
                         color="secondary"
-                        value={sectionValues.name}
-                        onChange={(e) => setSectionValues({...sectionValues, name: e.target.value})}
+                        value={sectionValues.name.en}
+                        onChange={(e) => setSectionValues({...sectionValues, name: {...sectionValues.name, en: e.target.value}})}
+                        sx={{width: '200px', mb: 1, mt:1}} 
+                        InputLabelProps={{
+                            shrink: true,
+                    }}/>    
+                      <TextField
+                        dir='rtl'
+                        id="outlined-basic"
+                        label="الاسم" 
+                        variant="outlined" 
+                        size='small'
+                        color="secondary"
+                        value={sectionValues.name.ar}
+                        onChange={(e) => setSectionValues({...sectionValues, name: {...sectionValues.name, ar: e.target.value}})}
                         sx={{width: '200px', mb: 1, mt:1}} 
                         InputLabelProps={{
                             shrink: true,
@@ -242,16 +255,19 @@ export default function Menu() {
                 <StickyHeadTable refresh={refresh} setCurrentMenuID={setCurrentMenuID} deleteMenu={deleteMenu}/>
             </div>
             <div style={{ height: '65vh', width: '550px'}} className='dash_div'>
-            <form >
-            <h3 style={{textAlign: 'center', margin: '0', padding: '20px', backgroundColor: 'rgba(0, 0, 0, 0.04)', borderBottom: '1px solid rgba(224, 224, 224, 1)'}}>
+            <form style={{ height: 'auto', paddingBottom: '20px'}}  >
+            <h3 style={{textAlign: 'center', margin: '0', padding: '20px', backgroundColor: 'rgb(245 245 245)', borderBottom: '1px solid rgba(224, 224, 224, 1)', position: 'sticky', top: 0, zIndex: '10'}}>
                 {currentMenuID? <span>Edit Dish</span>: <span>New Dish</span>}</h3>
 
             <TextField
                 id="outlined-basic"
                 label="Name" 
                 name="name" 
-                value={menuValues.name}
-                onChange={(e)=>handleInputChange(e)}
+                value={menuValues.name.en}
+                onChange={(e)=> setMenuValues({
+                  ...menuValues,
+                  name: {...menuValues.name, en: e.target.value}
+              })}
                 variant="outlined" 
                 size='small'
                 color="secondary"
@@ -264,8 +280,47 @@ export default function Menu() {
                     id="filled-multiline-static"
                     label="Description"
                     name="description" 
-                    value={menuValues.description}
-                    onChange={(e)=>handleInputChange(e)}
+                    value={menuValues.description.en}
+                    onChange={(e)=> setMenuValues({
+                      ...menuValues,
+                      description: {...menuValues.description, en: e.target.value}
+                  })}                 
+                    multiline
+                    rows={2}
+                    color="secondary"
+                    sx={{width: '300px', marginTop: '20px'}}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    />
+
+            <TextField
+                id="outlined-basic"
+                label="الاسم" 
+                name="name" 
+                value={menuValues.name.ar}
+                onChange={(e)=> setMenuValues({
+                  ...menuValues,
+                  name: {...menuValues.name, ar: e.target.value}
+              })}
+                dir='rtl'
+                variant="outlined" 
+                size='small'
+                color="secondary"
+                sx={{width: '300px', marginTop: '20px'}} 
+                InputLabelProps={{
+                    shrink: true,
+            }}/>
+                 <TextField
+                    id="filled-multiline-static"
+                    label="الوصف"
+                    name="description" 
+                    value={menuValues.description.ar}
+                    onChange={(e)=> setMenuValues({
+                      ...menuValues,
+                      description: {...menuValues.description, ar: e.target.value}
+                  })}      
+                    dir='rtl'           
                     multiline
                     rows={2}
                     color="secondary"
@@ -307,7 +362,7 @@ export default function Menu() {
                     size='small'
                     >
                         {rows.map((row, index)=>(
-                           <MenuItem key={index} value={row._id}>{row.name}</MenuItem>
+                           <MenuItem key={index} value={row._id}>{row.name.en}</MenuItem>
                         ))}
                     </Select>
                 </FormControl>

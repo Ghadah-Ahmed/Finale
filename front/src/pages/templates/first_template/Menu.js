@@ -34,11 +34,16 @@ export default function Menu() {
             <Nav lang={lang} ordersNum={ordersNum}/>
             { /* ////////////////////////// SECTIONS_SLIDER ////////////////////////// */ }
 
-            <div className="intro">
+           { lang === 'ar' ? 
+           <div className="intro">
                 <p className='title'>الـفـريـايـدو </p>
                 <p className='description'>نقدم قهوتنا الخاصة، مخبوزات طازجة تشمل انواع مختلفة من الكيك، المعجنات والحلويات الأخرى.</p>
             </div>
 
+           : <div className="intro" dir='ltr'>
+                <p className='title'>Elferiaydo </p>
+                <p className='description'>We serve our special coffee, a range of fresh bakeries including cakes, pastries and other sweets.</p>
+            </div>}
             <div dir="ltr">
             <ScrollingCarousel className='scrolling'>
                 {sections.map((section, index)=>(
