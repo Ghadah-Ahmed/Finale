@@ -41,6 +41,14 @@ in ***digital menu*** , restaurant owners can create their own digital menus on 
 - **See the status of my order** As a user/customer I can see wether my order was received or not.
 - **Access branch's contact information** As a user/customer I can call my resturant.
 
+## Features
+
+- Support languages, I18n.
+- Adding multiple branches. 
+- Selecting a theme.
+- Adding endless dishes and sections.
+- Immediate updates for orders status.
+
 ## Backlog
 
 - Support  portfolios as well.
@@ -108,6 +116,132 @@ in ***digital menu*** , restaurant owners can create their own digital menus on 
 - Item.js
 - Button.js		
 - Line.js
+
+# Server / Backend
+
+## Models
+
+Admin model
+
+```
+{
+     name: {
+      type: String,
+      required: [true, 'admin name should be provided']
+    },
+    email: {
+      type: String,
+      required: [true, 'Email should be provided']
+    },
+    password: {
+      type: String,
+      required: [true, 'Password should be provided']
+    }
+}
+```
+
+Menu Item model
+
+```
+ {
+    name: {
+      type: Object,
+      required: [true, 'Dish name should be provided']
+    },
+    description: {
+      type: Object,
+      required: [true, 'Dish description should be provided']
+    },
+    image: {
+      type: String,
+      required: [true, 'Dish image should be provided']
+    },
+    price: {
+      type: Number,
+      required: [true, 'Dish price should be provided']
+    },
+    admin: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: [true, 'Admin id should be provided'],
+      ref: "Admin"
+    },
+    section: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: [true, 'Section id should be provided'],
+      ref: "Section"
+    }
+ }
+```
+
+ Missing model
+
+```
+{ 
+    menu: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: [true, 'menu id should be provided'],
+        ref: "Menu"
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: [true, 'user id should be provided'],
+      ref: "User"
+    }
+}
+```
+
+ Section model
+
+```
+{ 
+   name: {
+      type: Object,
+      required: [true, 'Section name should be provided']
+    },
+    image:{
+      type: String,
+      required: [true, 'Section image should be provided']
+    },
+    admin: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: [true, 'admin id should be provided'],
+      ref: "Admin"
+    }
+}
+```
+
+ User model
+
+```
+{
+    name: {
+      type: String,
+      required: [true, 'User name should be provided']
+    },
+    city: {
+      type: String,
+      required: [true, 'City should be provided']
+    },
+    district: {
+      type: String,
+      required: [true, 'District should be provided']
+    },
+    email: {
+      type: String,
+      required: [true, 'Email should be provided']
+    },
+    password: {
+      type: String,
+      required: [true, 'Password should be provided']
+    },
+    admin: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: [true, 'Admin id should be provided'],
+      ref: "Admin"
+    }
+}
+```
+
 
 
 ## Technologies
