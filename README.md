@@ -1,6 +1,6 @@
 ## Quick Compo
 
- <img width="390" alt="Screen Shot 1443-05-16 at 2 55 34 PM" src="https://user-images.githubusercontent.com/75578380/146763843-1c94ffe8-3922-4e77-933d-28a256e4a7d8.png">
+ <img width="390" alt="Screen Shot 1443-05-16 at 2 55 34 PM" src="https://user-images.githubusercontent.com/75578380/147196446-8464a005-3a3d-4254-99a8-e75c9dabe7cb.png">
 
 
 
