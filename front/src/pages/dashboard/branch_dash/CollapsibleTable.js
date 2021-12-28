@@ -57,7 +57,7 @@ function Row({ row, id }) {
                   {row.orders.map((order, index) => (
                     <TableRow key={index}>
                       <TableCell component="th" scope="row">
-                        {order.name}
+                        {order.name.en}
                       </TableCell>
                       <TableCell>{order.quantity || 1}</TableCell>
                       <TableCell align="right">{order.price}</TableCell>

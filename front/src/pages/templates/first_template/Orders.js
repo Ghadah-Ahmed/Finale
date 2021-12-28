@@ -73,7 +73,7 @@ export default function Orders() {
             </div>
 
             </div> 
-            : <p> Oops! You have no orders yet!</p>}
+            : <p dir='ltr'> Oops! You have no orders yet!</p>}
           
         </div>
     )

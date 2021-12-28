@@ -13,16 +13,23 @@ function useQuery() {
     return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 export default function  Branch() {
+    const navigate = useNavigate()
     let query = useQuery();
     const [notification, setNotification] = React.useState(false);
 
-    React.useEffect(() => {
-        console.log(notification)
-    }, [notification]);
+    // React.useEffect(() => {
+    //     console.log(notification)
+    // }, [notification]);
 
     React.useEffect(() => {
         document.body.classList.add("body_stop_scroll");
     }, []);
+
+    const logOut = () => {
+        localStorage.removeItem('token');
+        navigate('/login')
+    }
+
 
     return (
         <div className='dashBoard' dir='ltr'>
@@ -50,7 +57,7 @@ export default function  Branch() {
                             </div>
                         </Link>
                         <div className='b_menu'>
-                            <LogoutRoundedIcon/>
+                            <LogoutRoundedIcon onClick={() => logOut()}/>
                         </div>
                     </div>
                 </div>

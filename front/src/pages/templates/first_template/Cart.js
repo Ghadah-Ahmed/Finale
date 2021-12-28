@@ -12,7 +12,7 @@ export default function Cart() {
     const [items, setItems] = React.useState([])
     const [ordersNum, setOrdersNum] = React.useState(true)
     const [total, setTotal] = React.useState(0)
-    const [info, setInfo] = React.useState({name: '', note: ''})
+    const [info, setInfo] = React.useState({name: 'Anonymous', note: 'No notes.'})
     const { adminId, branchId } = useParams();
     const {lang, setLang} = React.useContext(LanguageContext)
 
@@ -102,9 +102,9 @@ export default function Cart() {
         <hr/>
 
           <div dir={lang === 'ar' ? 'rtl' : "ltr"} className='order_div details_div'>
-                <p className="display item_description">{texts[lang].total} <span>SR{total}</span></p>
-                <p className="display item_description">{texts[lang].VAT} <span>SR59.00</span></p>
-                <p style={{color: '#000'}} className='display item_name'>{texts[lang].gross} <span>SR{total}</span></p>
+                <p className="display item_description">{texts[lang].total} <span>$ {(Math.round(total * 100) / 100).toFixed(2)}</span></p>
+                <p className="display item_description">{texts[lang].VAT} <span>$ { (Math.round((total * (15/100)) * 100) / 100).toFixed(2)}</span></p>
+                <p style={{color: '#000'}} className='display item_name'>{texts[lang].gross} <span>$ { (Math.round(((total * (15/100)) + total) * 100) / 100).toFixed(2)}</span></p>
 
                 <div  id='order_div' style={{padding: '0 15px'}}>
                     <Button onClick={()=> order()} fullWidth variant="contained">{texts[lang].orderNow}</Button>
