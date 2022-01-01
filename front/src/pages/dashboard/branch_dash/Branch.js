@@ -7,6 +7,7 @@ import barcode from '../../../images/barcode.svg';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import bell from '../../../images/bell.gif';
 import bellS from '../../../images/bell.svg';
+import jwt_decode from "jwt-decode";
 
 function useQuery() {
     const { search } = useLocation();
@@ -16,10 +17,20 @@ export default function  Branch() {
     const navigate = useNavigate()
     let query = useQuery();
     const [notification, setNotification] = React.useState(false);
+    const storedToken = localStorage.getItem("token");
 
-    // React.useEffect(() => {
-    //     console.log(notification)
-    // }, [notification]);
+    React.useEffect(() => {
+        if (storedToken) {
+          let decodedData = jwt_decode(storedToken, { payload: true });
+          let expirationDate = decodedData.exp;
+          var current_time = Date.now() / 1000;
+          if (expirationDate < current_time || decodedData.role != 'branch') {
+            logOut();
+          }
+        }else if(!storedToken){
+            navigate('/login')
+          }
+    }, []);
 
     React.useEffect(() => {
         document.body.classList.add("body_stop_scroll");

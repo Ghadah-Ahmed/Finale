@@ -33,7 +33,7 @@ export default function Log_in() {
       const login = () => {
         axios.post('http://localhost:8080/log/login', values).then( res => {
             setErr(false)
-            console.log(res.data) 
+            // console.log(res.data) 
             localStorage.setItem('token', res.data.token)
             res.data.role == 'branch' ?
             navigate(`/dash/${res.data.dbUser.admin}/${res.data.dbUser._id}`)

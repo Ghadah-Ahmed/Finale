@@ -11,6 +11,7 @@ import Branches from './Branches';
 import Statistics from './Statistics';
 import Theme from './Theme';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
+import jwt_decode from "jwt-decode";
 
 
 function useQuery() {
@@ -19,10 +20,30 @@ function useQuery() {
 }
 export default function MainD() {
     let query = useQuery();
+    const storedToken = localStorage.getItem("token");
+    const navigate = useNavigate()
+
+    React.useEffect(() => {
+        if (storedToken) {
+          let decodedData = jwt_decode(storedToken, { payload: true });
+          let expirationDate = decodedData.exp;
+          var current_time = Date.now() / 1000;
+          if (expirationDate < current_time || decodedData.role != 'admin') {
+            logOut();
+          }
+        }else if(!storedToken){
+            navigate('/login')
+          }
+    }, []);
 
     React.useEffect(() => {
         document.body.classList.add("body_stop_scroll");
     }, []);
+
+    const logOut = () => {
+        localStorage.removeItem('token');
+        navigate('/login')
+    }
 
     return (
         <div className='dashBoard' dir='ltr'>
@@ -60,7 +81,7 @@ export default function MainD() {
                             </div>
                         </Link>
                         <div className='b_menu'>
-                            <LogoutRoundedIcon/>
+                        <LogoutRoundedIcon onClick={() => logOut()}/>
                         </div>
                     </div>
                 </div>
