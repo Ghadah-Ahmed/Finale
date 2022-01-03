@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express()
 const cors = require("cors");
-const POTR = process.env.POTR || '8080';
+// const POTR = process.env.POTR || 8080;
 const mongoose = require('mongoose');
 const Menu = require('./router/menu')
 const Users = require('./router/users')
@@ -26,11 +26,11 @@ async function main() {
   await mongoose.connect('mongodb://localhost:27017/finale');
 }
 
-app.use('/', express.static(path.join(__dirname, '/front/build')));
+// app.use('/', express.static(path.join(__dirname, '/front/build')));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "front/build/index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "front/build/index.html"));
+// });
 
 
 
@@ -41,8 +41,17 @@ app.use('/section', Section)
 app.use('/missing', auth, Missing)
 app.use('/log', Login)
 
+app.listen(process.env.PORT || 8080, () => {
+  console.log("app work");
+  if (process.env.NODE_ENV === "production") {
+    // app.set(PORT, 3001);
+    app.use("/", express.static(path.join(__dirname, "/front/build")));
+    app.get("*", (req, res) => {
+      res.sendFile(path.resolve(__dirname + "/front/build", "index.html"));
+    });
+  } else app.set(PORT, process.env.PORT || 8080);
+});
 
-
-app.listen(POTR, function () {
-     console.log(`Example app listening on port 8080! ${POTR}`)
-})
+// app.listen(POTR, function () {
+//      console.log(`Example app listening on port 8080! ${POTR}`)
+// })
