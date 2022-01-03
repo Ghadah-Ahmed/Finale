@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express()
 const cors = require("cors");
-// const POTR = process.env.POTR || 8080;
+const POTR = process.env.POTR || 8080;
 const mongoose = require('mongoose');
 const Menu = require('./router/menu')
 const Users = require('./router/users')
