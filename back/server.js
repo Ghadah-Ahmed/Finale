@@ -10,6 +10,7 @@ const Admin = require('./router/admin')
 const Section = require('./router/section')
 const Login = require('./router/login')
 const auth = require("./middleware/auth");
+const path = require("path");
 
 app.use(express.json())
 app.use(cors({origin: `http://localhost:${POTR}`}))
@@ -24,6 +25,13 @@ main().catch(err => console.log(err));
 async function main() {
   await mongoose.connect('mongodb://localhost:27017/finale');
 }
+
+app.use('/', express.static(path.join(__dirname, '/front/build')));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "front/build/index.html"));
+});
+
 
 
 app.use('/admin', auth, Admin)
